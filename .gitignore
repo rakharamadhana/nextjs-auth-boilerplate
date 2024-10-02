@@ -33,3 +33,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# IDE (e.g., WebStorm, IntelliJ, VSCode) settings
+.idea/
+
+# Yarn cache and plug'n'play
+.yarn/
