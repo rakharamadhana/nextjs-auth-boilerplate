@@ -1,4 +1,4 @@
-# Next.js Project with NextAuth, Prisma, and Supabase PostgreSQL
+# Next.js Project with NextAuth, NextPWA, Prisma, and Supabase PostgreSQL
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
@@ -8,6 +8,7 @@ This project is a full-stack web application built using:
 
 - **[Next.js](https://nextjs.org/)**: A React framework for building modern web applications with server-side rendering and static site generation.
 - **[NextAuth](https://next-auth.js.org/)**: Authentication solution for Next.js with built-in support for popular OAuth providers and credentials authentication.
+- **[NextPWA](https://github.com/shadowwalker/next-pwa)**: Zero config PWA plugin for Next.js, with workbox.
 - **[Prisma ORM](https://www.prisma.io/)**: An ORM that helps you manage your PostgreSQL database with ease.
 - **[Supabase](https://supabase.com/)**: A powerful open-source Firebase alternative, providing a PostgreSQL database for the project.
 
@@ -83,6 +84,7 @@ To learn more about the technologies used in this project, check out the followi
 
 - **[Next.js Documentation](https://nextjs.org/docs)** - Learn more about Next.js features and API.
 - **[NextAuth Documentation](https://next-auth.js.org/getting-started/introduction)** - Authentication for Next.js.
+- **[NextPWA Readme](https://github.com/shadowwalker/next-pwa#zero-config-pwa-plugin-for-nextjs)** - Zero config PWA plugin for Next.js.
 - **[Prisma Documentation](https://www.prisma.io/docs)** - Database access and management with Prisma.
 - **[Supabase Documentation](https://supabase.com/docs)** - Hosted PostgreSQL backend.
 

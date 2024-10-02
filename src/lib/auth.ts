@@ -1,5 +1,6 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { db } from "@/lib/db";
 import { compare } from "bcrypt";
@@ -15,6 +16,10 @@ export const authOptions: NextAuthOptions = {
     },
     // Configure one or more authentication providers
     providers: [
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID!,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+        }),
         CredentialsProvider({
             // The name to display on the sign in form (e.g. "Sign in with...")
             name: "Credentials",
@@ -39,10 +44,11 @@ export const authOptions: NextAuthOptions = {
                     return null;
                 }
 
-                const passwordMatch = await compare(credentials.password, existingUser.password);
-
-                if(!passwordMatch) {
-                    return null;
+                if (existingUser.password) {
+                    const passwordMatch = await compare(credentials.password, existingUser.password)
+                    if (!passwordMatch) return null
+                } else {
+                    return null
                 }
 
                 return {
