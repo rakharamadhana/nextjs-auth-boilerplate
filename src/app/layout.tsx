@@ -1,8 +1,9 @@
 import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 import '@/styles/globals.css';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
-import { Toaster } from "@/components/ui/toaster"
+import { Toaster } from "@/components/ui/toaster";
 import Provider from "@/components/Provider";
 
 const inter = Inter({ subsets: ['latin'] });
@@ -32,19 +33,27 @@ export const metadata = {
 export default function RootLayout({
                                        children,
                                    }: {
-  children: React.ReactNode;
+    children: React.ReactNode;
 }) {
-  return (
-      <html lang='en'>
-      <body className={inter.className}>
-      <Provider>
-          <main className='h-screen flex flex-col justify-center items-center'>
-              <Navbar/>
-              {children}
-          </main>
-          <Toaster/>
-      </Provider>
-      </body>
-      </html>
-  );
+    return (
+        <html lang='en'>
+        <body className={inter.className}>
+        <Provider>
+            <div className="min-h-screen flex flex-col">
+                {/* Navbar at the top */}
+                <Navbar/>
+
+                {/* Main content that grows and takes available space */}
+                <main className="flex-grow flex flex-col justify-center items-center max-w-7xl mx-auto p-4">
+                    {children}
+                </main>
+
+                {/* Footer at the bottom */}
+                <Footer/>
+            </div>
+            <Toaster/>
+        </Provider>
+        </body>
+        </html>
+    );
 }

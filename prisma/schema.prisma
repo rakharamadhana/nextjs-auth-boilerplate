@@ -43,14 +43,20 @@ model Session {
   @@map("sessions")
 }
 
+enum UserRole {
+  admin
+  user
+}
+
 model User {
-  id            Int       @id @default(autoincrement()) // Change to Int and autoincrement
+  id            Int       @id @default(autoincrement())
   username      String?   @unique
   password      String?
   name          String?
   email         String?   @unique
   emailVerified DateTime? @map("email_verified")
   image         String?
+  role          UserRole? @default(user) // Use the enum for the role
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]

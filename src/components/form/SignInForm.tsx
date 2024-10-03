@@ -46,12 +46,13 @@ const SignInForm = () => {
             redirect: false
         });
 
-        if(signInData?.error){
+        if (signInData?.error) {
+            // Display the error message returned from the authorize function
             toast({
                 title: "Error",
-                description: "Oops! Something went wrong!",
-                variant: 'destructive'
-            })
+                description: signInData.error, // Use the error message provided by your custom logic
+                variant: 'destructive',
+            });
         } else {
             router.refresh();
             router.push('/admin');

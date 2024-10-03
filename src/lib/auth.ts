@@ -9,75 +9,66 @@ export const authOptions: NextAuthOptions = {
     adapter: PrismaAdapter(db),
     secret: process.env.NEXTAUTH_SECRET,
     session: {
-        strategy: 'jwt'
+        strategy: 'jwt',
     },
     pages: {
         signIn: '/sign-in',
     },
-    // Configure one or more authentication providers
     providers: [
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
         }),
         CredentialsProvider({
-            // The name to display on the sign in form (e.g. "Sign in with...")
             name: "Credentials",
-            // `credentials` is used to generate a form on the sign in page.
-            // You can specify which fields should be submitted, by adding keys to the `credentials` object.
-            // e.g. domain, username, password, 2FA token, etc.
-            // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
                 email: { label: "Email", type: "email", placeholder: "john@mail.com" },
-                password: { label: "Password", type: "password" }
+                password: { label: "Password", type: "password" },
             },
-            async authorize(credentials, req) {
-                if(!credentials?.email || !credentials?.password) {
-                    return null;
+            // @ts-ignore
+            async authorize(credentials) {
+                if (!credentials?.email || !credentials?.password) {
+                    throw new Error("Email and password are required.");
                 }
 
                 const existingUser = await db.user.findUnique({
-                    where: { email: credentials?.email }
+                    where: { email: credentials.email },
                 });
 
-                if(!existingUser) {
-                    return null;
+                if (!existingUser) {
+                    throw new Error("No user found with this email.");
                 }
 
                 if (existingUser.password) {
-                    const passwordMatch = await compare(credentials.password, existingUser.password)
-                    if (!passwordMatch) return null
+                    const passwordMatch = await compare(credentials.password, existingUser.password);
+                    if (!passwordMatch) {
+                        throw new Error("Invalid password.");
+                    }
                 } else {
-                    return null
+                    throw new Error("User has no password set.");
                 }
 
                 return {
-                    id: `${existingUser.id}`,
-                    username: existingUser.username,
+                    id: existingUser.id,
                     name: existingUser.name,
-                    email: existingUser.email
-                }
-            }
-        })
+                    email: existingUser.email,
+                    image: existingUser.image,
+                    role: existingUser.role,
+                };
+            },
+        }),
     ],
     callbacks: {
         async jwt({ token, user }) {
-            if(user) {
-                return {
-                    ...token,
-                    username: user.username
-                }
+            if (user) {
+                token.role = user.role;
             }
-            return token
+            return token;
         },
-        async session({ session, token}) {
-            return {
-                ...session,
-                user: {
-                    ...session.user,
-                    username: token.username
-                }
-            }
-        }
+        async session({ session, token }) {
+            session.user.role = token.role;
+
+            return session;
+        },
     },
-}
+};
