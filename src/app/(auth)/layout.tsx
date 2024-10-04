@@ -2,6 +2,7 @@ import { FC, ReactNode } from 'react';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
+import AnimatedSection from "@/components/AnimatedSection";
 
 interface AuthLayoutProps {
   children: ReactNode;
@@ -15,7 +16,7 @@ const AuthLayout: FC<AuthLayoutProps> = async ({ children }) => {
     redirect('/');
   }
 
-  return <div className='bg-slate-200 p-10 rounded-md'>{children}</div>;
+  return <AnimatedSection className='bg-slate-200 p-10 rounded-md'>{children}</AnimatedSection>;
 };
 
 export default AuthLayout;

@@ -45,7 +45,7 @@ export const authOptions: NextAuthOptions = {
                         throw new Error("Invalid password.");
                     }
                 } else {
-                    throw new Error("User registered with different method, please use another method.");
+                    throw new Error("User registered with different method! Please use another method.");
                 }
 
                 return {

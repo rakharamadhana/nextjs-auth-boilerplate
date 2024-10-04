@@ -2,33 +2,75 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { authOptions } from "@/lib/auth";
 import Image from "next/image";
+import AnimatedSection from "@/components/AnimatedSection";
+import AnimatedButton from "@/components/AnimatedButton";
 
 const ProfilePage = async () => {
     const session = await getServerSession(authOptions);
 
     return (
-        <div className="flex flex-col items-center justify-center p-4">
-            <h1 className='text-2xl md:text-3xl font-bold mb-4'>Profile</h1>
+        <div className="flex flex-col items-center justify-center p-6">
+            <AnimatedSection
+                initial={{ opacity: 0, y: 20 }}
+                animate={{opacity: 1, y: 0}}
+                transition={{duration: 0.5}}
+                className="text-3xl md:text-4xl font-extrabold text-indigo-800 mb-6">Your Profile</AnimatedSection>
+
             {/* Profile Image */}
             {session ? (
-                <Image
-                    src={session?.user.image ?? ""}
-                    alt={session?.user.name ?? ""}
-                    className="rounded-full mb-4" // Added margin-bottom for spacing
-                    width={100}
-                    height={100}
-                />
+                <AnimatedSection
+                    initial={{ opacity: 0, scale: 0.5 }}
+                    animate={{opacity: 1, scale: 1}}
+                    transition={{duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                    className="flex flex-col items-center">
+                    <Image
+                        src={session?.user.image ?? "/default-profile.png"}
+                        alt={session?.user.name ?? "User"}
+                        className="rounded-full mb-6 shadow-lg"
+                        width={120}
+                        height={120}
+                    />
+                    <p className="text-lg font-semibold text-gray-700 mb-2">
+                        Hello, <span className="text-indigo-600">{session?.user.name}</span>
+                    </p>
+                </AnimatedSection>
             ) : null}
 
             {/* Profile Information */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 p-2 mt-4 w-full max-w-lg">
-                <p className="font-semibold">Name:</p>
-                <p>{session?.user.name}</p>
-                <p className="font-semibold">Email:</p>
-                <p>{session?.user.email}</p>
-                <p className="font-semibold">Role:</p>
-                <p>{session?.user.role}</p>
-            </div>
+            <AnimatedSection
+                initial={{ opacity: 0, x: -20 }}
+                animate={{opacity: 1, x: 0}}
+                transition={{duration: 0.5, delay: 0.5}}
+                className="bg-white shadow-2xl rounded-lg p-6 mt-6 w-full max-w-xl mx-auto">
+                <h2 className="text-xl font-bold text-indigo-700 mb-4 text-center">Account Information</h2>
+                <div className="grid grid-cols-2 gap-y-4 gap-x-4">
+                    <p className="font-medium text-gray-600 text-center">Name:</p>
+                    <p className="text-gray-900 text-left">{session?.user.name ?? "N/A"}</p>
+
+                    <p className="font-medium text-gray-600 text-center">Email:</p>
+                    <p className="text-gray-900 text-left">{session?.user.email ?? "N/A"}</p>
+
+                    <p className="font-medium text-gray-600 text-center">Role:</p>
+                    <p className="text-gray-900 text-left capitalize">{session?.user.role ?? "User"}</p>
+                </div>
+            </AnimatedSection>
+
+
+
+            {/* Actions Section */}
+            <AnimatedSection
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{opacity: 1, scale: 1}}
+                transition={{duration: 0.5, delay: 0.7}}
+                className="mt-8 flex space-x-4">
+                <AnimatedButton href="/edit-profile" className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                    Edit Profile
+                </AnimatedButton>
+                <AnimatedButton logOut={true} href="/sign-out" className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                >
+                    Logout
+                </AnimatedButton>
+            </AnimatedSection>
         </div>
     );
 };
