@@ -1629,6 +1629,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nimpl/classnames-minifier@npm:^3.2.1":
+  version: 3.2.1
+  resolution: "@nimpl/classnames-minifier@npm:3.2.1"
+  dependencies:
+    classnames-minifier: 0.2.2
+    uuid: 9.0.1
+  peerDependencies:
+    css-loader: ">=4.0.0"
+  checksum: be8beca2b669faf05ca455f5a54f95e07be4679cd0f7d0cfc02f0e1413f83f8bf7e7c915f62ba25743f45030e10ea5d8ec1bac9be46dcd39361c700fe45ee472
+  languageName: node
+  linkType: hard
+
 "@nodelib/fs.scandir@npm:2.1.5":
   version: 2.1.5
   resolution: "@nodelib/fs.scandir@npm:2.1.5"
@@ -2964,6 +2976,17 @@ __metadata:
   dependencies:
     clsx: 2.0.0
   checksum: e7fd1fab433ef06f52a1b7b241b70b4a185864deef199d3b0a2c3412f1cc179517288264c383f3b971a00d76811625fc8f7ffe709e6170219e88cd7368f08a20
+  languageName: node
+  linkType: hard
+
+"classnames-minifier@npm:0.2.2":
+  version: 0.2.2
+  resolution: "classnames-minifier@npm:0.2.2"
+  dependencies:
+    uuid: 9.0.1
+  peerDependencies:
+    css-loader: ">=4.0.0"
+  checksum: bbf2019694c97f5e7f4fed7cda998cc8945b16460886b57636b60ae85e926660f100082dcf3109c9b59c6aa34732a97180130834e33a790a66d849d1f79a98fd
   languageName: node
   linkType: hard
 
@@ -5581,6 +5604,7 @@ __metadata:
     "@auth/prisma-adapter": ^2.5.3
     "@hookform/resolvers": ^3.1.1
     "@next-auth/prisma-adapter": ^1.0.7
+    "@nimpl/classnames-minifier": ^3.2.1
     "@prisma/client": ^5.20.0
     "@radix-ui/react-label": ^2.0.2
     "@radix-ui/react-slot": ^1.0.2
@@ -7559,6 +7583,15 @@ __metadata:
   version: 1.0.2
   resolution: "util-deprecate@npm:1.0.2"
   checksum: 474acf1146cb2701fe3b074892217553dfcf9a031280919ba1b8d651a068c9b15d863b7303cb15bd00a862b498e6cf4ad7b4a08fb134edd5a6f7641681cb54a2
+  languageName: node
+  linkType: hard
+
+"uuid@npm:9.0.1":
+  version: 9.0.1
+  resolution: "uuid@npm:9.0.1"
+  bin:
+    uuid: dist/bin/uuid
+  checksum: 39931f6da74e307f51c0fb463dc2462807531dc80760a9bff1e35af4316131b4fc3203d16da60ae33f07fdca5b56f3f1dd662da0c99fea9aaeab2004780cc5f4
   languageName: node
   linkType: hard
 
