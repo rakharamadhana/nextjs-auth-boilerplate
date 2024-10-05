@@ -4,6 +4,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { signOut, useSession } from "next-auth/react";
+import Link from 'next/link'; // Import Link from next/link
 
 interface AnimatedButtonProps {
     children: React.ReactNode; // The content inside the button
@@ -30,17 +31,23 @@ const AnimatedButton: React.FC<AnimatedButtonProps> = ({ children, className, hr
     };
 
     return (
-        <motion.a
-            onClick={logOut ? handleClick : undefined} // Only attach onClick if logOut is true
-            href={!logOut ? href : undefined} // Only use href if not logging out
+        <motion.div // Wrap Link in a motion.div
             initial={{ scale: 1 }} // Initial scale
             whileHover={{ scale: 1.1 }} // Scale up on hover
             whileTap={{ scale: 0.9 }} // Scale down on tap
             transition={{ duration: 0.2 }} // Animation duration
             className={`px-6 py-2 rounded-md ${className} ${href || logOut ? 'cursor-pointer' : ''}`} // Add cursor-pointer if href or logOut is present
         >
-            {children} {/* Render button content */}
-        </motion.a>
+            {logOut ? (
+                <button onClick={handleClick} className="w-full text-left"> {/* Use a button for log out */}
+                    {children}
+                </button>
+            ) : (
+                <Link href={href || '#'} className="block w-full"> {/* Use Link for navigation */}
+                    {children}
+                </Link>
+            )}
+        </motion.div>
     );
 };
 

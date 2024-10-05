@@ -4,17 +4,14 @@ import { authOptions } from "@/lib/auth";
 import Image from "next/image";
 import AnimatedSection from "@/components/AnimatedSection";
 import AnimatedButton from "@/components/AnimatedButton";
+import EditProfileForm from "@/components/form/EditProfileForm";
 
 const ProfilePage = async () => {
     const session = await getServerSession(authOptions);
 
     return (
         <div className="flex flex-col items-center justify-center p-6">
-            <AnimatedSection
-                initial={{ opacity: 0, y: 20 }}
-                animate={{opacity: 1, y: 0}}
-                transition={{duration: 0.5}}
-                className="text-3xl md:text-4xl font-extrabold text-indigo-800 mb-6">Your Profile</AnimatedSection>
+            <section className="text-3xl md:text-4xl font-extrabold text-indigo-800 mb-6">My Profile</section>
 
             {/* Profile Image */}
             {session ? (
@@ -38,39 +35,24 @@ const ProfilePage = async () => {
 
             {/* Profile Information */}
             <AnimatedSection
-                initial={{ opacity: 0, x: -20 }}
+                initial={{opacity: 0, x: -20}}
                 animate={{opacity: 1, x: 0}}
                 transition={{duration: 0.5, delay: 0.5}}
-                className="bg-white shadow-2xl rounded-lg p-6 mt-6 w-full max-w-xl mx-auto">
+                className="border bg-white shadow-lg rounded-lg p-6 mt-6 w-full max-w-xl mx-auto">
                 <h2 className="text-xl font-bold text-indigo-700 mb-4 text-center">Account Information</h2>
-                <div className="grid grid-cols-2 gap-y-4 gap-x-4">
-                    <p className="font-medium text-gray-600 text-center">Name:</p>
-                    <p className="text-gray-900 text-left">{session?.user.name ?? "N/A"}</p>
-
-                    <p className="font-medium text-gray-600 text-center">Email:</p>
-                    <p className="text-gray-900 text-left">{session?.user.email ?? "N/A"}</p>
-
-                    <p className="font-medium text-gray-600 text-center">Role:</p>
-                    <p className="text-gray-900 text-left capitalize">{session?.user.role ?? "User"}</p>
-                </div>
+                <EditProfileForm />
             </AnimatedSection>
-
 
 
             {/* Actions Section */}
-            <AnimatedSection
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{opacity: 1, scale: 1}}
-                transition={{duration: 0.5, delay: 0.7}}
+            <section
                 className="mt-8 flex space-x-4">
-                <AnimatedButton href="/edit-profile" className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
-                    Edit Profile
-                </AnimatedButton>
-                <AnimatedButton logOut={true} href="/sign-out" className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
+                <AnimatedButton logOut={true} href="/sign-out"
+                                className="px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-600"
                 >
-                    Logout
+                    Sign Out
                 </AnimatedButton>
-            </AnimatedSection>
+            </section>
         </div>
     );
 };

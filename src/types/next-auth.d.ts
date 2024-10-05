@@ -11,6 +11,7 @@ declare module "next-auth" {
 
     interface Session {
         user: User & {
+            id: string | null; // Add id to the JWT type
             username?: string | null; // Optional username
             role?: string | null; // Add role to the session user type
         };
@@ -20,8 +21,8 @@ declare module "next-auth" {
 // Extend the JWT type
 declare module "next-auth/jwt" {
     interface JWT {
+        id: string | null; // Add id to the JWT type
         username?: string | null;
         role?: string | null; // Ensure role is nullable or optional
     }
 }
-

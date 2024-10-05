@@ -26,14 +26,14 @@ const Navbar = async () => {
                     </Link>
                     {/* Menu Items */}
                     <div className="hidden md:flex space-x-6"> {/* Hide on mobile */}
-                        {session && ( // Conditionally render User Profile link
-                            <Link href='/profile' className="text-sm font-medium">
-                                User Profile
-                            </Link>
-                        )}
                         {isAdmin && ( // Conditionally render Admin Dashboard link
                             <Link href='/admin' className="text-sm font-medium">
-                                Admin Dashboard
+                                Dashboard
+                            </Link>
+                        )}
+                        {session && ( // Conditionally render User Profile link
+                            <Link href='/profile' className="text-sm font-medium">
+                                My Profile
                             </Link>
                         )}
                     </div>

@@ -25,20 +25,17 @@ export default async function AdminPage() {
     return (
         <div className="flex flex-col items-center justify-center p-6">
             {/* Admin Hero Section */}
-            <AnimatedSection
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5 }}
+            <section
                 className="w-full pt-5 pb-2 text-center">
                 <div className="max-w-7xl mx-auto">
                     <h1 className="text-5xl font-bold text-indigo-800 mb-4">
-                        Admin Dashboard
+                        Dashboard
                     </h1>
                     <p className="text-lg text-gray-700 mb-8">
-                        Manage users, courses, and mentoring program settings.
+                        Manage users, courses, and mentoring program settings for <b>Admin</b>.
                     </p>
                 </div>
-            </AnimatedSection>
+            </section>
 
             {/* User Info Section */}
             <AnimatedSection
@@ -46,7 +43,7 @@ export default async function AdminPage() {
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.3 }}
                 className="mt-4 w-full max-w-4xl">
-                <div className="rounded-md p-6 mt-6 bg-white shadow-xl w-full">
+                <div className="border rounded-md p-6 mt-6 bg-white shadow-lg w-full">
                     <h2 className="text-xl font-semibold text-indigo-700">
                         Welcome back, {session.user.name}!
                     </h2>
@@ -57,21 +54,18 @@ export default async function AdminPage() {
             </AnimatedSection>
 
             {/* Admin Actions Section */}
-            <AnimatedSection
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.5 }}
+            <section
                 className="mt-12 flex space-x-4">
-                <AnimatedButton href="/admin/users" className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+                <AnimatedButton href="/admin" className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
                     Manage Users
                 </AnimatedButton>
-                <AnimatedButton href="/admin/courses" className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
+                <AnimatedButton href="/admin" className="px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700">
                     Manage Courses
                 </AnimatedButton>
-                <AnimatedButton href="/admin/settings" className="px-6 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400">
+                <AnimatedButton href="/admin" className="px-6 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400">
                     Settings
                 </AnimatedButton>
-            </AnimatedSection>
+            </section>
         </div>
     );
 }

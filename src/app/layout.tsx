@@ -1,12 +1,20 @@
 import Navbar from '@/components/navbar/Navbar';
 import Footer from '@/components/Footer';
 import '@/styles/globals.css';
-import type { Metadata } from 'next';
+import type {Metadata, Viewport} from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from "@/components/ui/toaster";
 import Provider from "@/components/Provider";
 
 const inter = Inter({ subsets: ['latin'] });
+
+export const viewport: Viewport = {
+    width: 'device-width',
+    initialScale: 1,
+    minimumScale: 1,
+    viewportFit: 'cover',
+    themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }]
+}
 
 export const metadata = {
     title: "NextJS Boilerplate",
@@ -14,7 +22,6 @@ export const metadata = {
     generator: "Next.js",
     manifest: "/manifest.json",
     keywords: ["nextjs", "nextjs14", "next14", "pwa", "next-pwa"],
-    themeColor: [{ media: "(prefers-color-scheme: dark)", color: "#fff" }],
     authors: [
         { name: "Rakha Ramadhana" },
         {
@@ -22,8 +29,6 @@ export const metadata = {
             url: "linkedin.com/in/rakha-ramadhana",
         },
     ],
-    viewport:
-        "minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, viewport-fit=cover",
     icons: [
         { rel: "apple-touch-icon", url: "icons/icon512_rounded.png" },
         { rel: "icon", url: "icons/icon512_rounded.png" },

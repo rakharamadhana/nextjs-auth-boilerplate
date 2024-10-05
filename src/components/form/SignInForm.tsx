@@ -54,6 +54,12 @@ const SignInForm = () => {
                 variant: 'destructive',
             });
         } else {
+            toast({
+                title: "Success",
+                description: "Login success!",
+                variant: 'success',
+            });
+
             router.refresh();
             router.push('/admin');
         }

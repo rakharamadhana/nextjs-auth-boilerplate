@@ -61,13 +61,30 @@ export const authOptions: NextAuthOptions = {
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
-                token.role = user.role;
+                // Assuming `user` contains the ID, name, email, and role from your database
+                token.id = user.id; // Add user ID to token
+                token.role = user.role; // Add role to token
             }
             return token;
         },
         async session({ session, token }) {
+            // Add user ID and role to the session
+            session.user.id = token.id ?? ""; // Provide a fallback, e.g., an empty string
             session.user.role = token.role;
 
+            if (!token.id) {
+                throw new Error("User ID is null or undefined");
+            }
+
+            // This might not be needed if you properly handle the state in your component
+            const updatedUser = await db.user.findUnique({
+                where: { id: Number(token.id) },
+            });
+
+            if (updatedUser) {
+                session.user.name = updatedUser.name;
+                session.user.email = updatedUser.email;
+            }
             return session;
         },
     },
