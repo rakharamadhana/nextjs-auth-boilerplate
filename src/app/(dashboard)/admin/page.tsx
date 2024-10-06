@@ -1,7 +1,7 @@
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import AnimatedSection from "@/components/AnimatedSection";
-import AnimatedButton from "@/components/AnimatedButton";
+import AnimatedSection from "@/components/animated/AnimatedSection";
+import AnimatedButton from "@/components/animated/AnimatedButton";
 
 export default async function AdminPage() {
     const session = await getServerSession(authOptions);
@@ -9,15 +9,12 @@ export default async function AdminPage() {
     // Check if the user is authenticated
     if (!session?.user) {
         return (
-            <AnimatedSection
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, ease: "easeOut" }}
+            <section
                 className="flex flex-col items-center justify-center min-h-screen">
                 <h2 className="text-3xl font-bold text-red-500">
                     Please log in to view this admin page.
                 </h2>
-            </AnimatedSection>
+            </section>
         );
     }
 
@@ -38,10 +35,7 @@ export default async function AdminPage() {
             </section>
 
             {/* User Info Section */}
-            <AnimatedSection
-                initial={{ opacity: 0, scale: 0.5 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: 0.3 }}
+            <section
                 className="mt-4 w-full max-w-4xl">
                 <div className="border rounded-md p-6 mt-6 bg-white shadow-lg w-full">
                     <h2 className="text-xl font-semibold text-indigo-700">
@@ -51,7 +45,7 @@ export default async function AdminPage() {
                         Email: {session.user.email}
                     </p>
                 </div>
-            </AnimatedSection>
+            </section>
 
             {/* Admin Actions Section */}
             <section

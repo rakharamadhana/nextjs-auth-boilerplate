@@ -2,7 +2,7 @@ import { FC, ReactNode } from 'react';
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { redirect } from "next/navigation";
-import AnimatedSection from "@/components/AnimatedSection";
+import AnimatedSection from "@/components/animated/AnimatedSection";
 
 interface AuthLayoutProps {
   children: ReactNode;

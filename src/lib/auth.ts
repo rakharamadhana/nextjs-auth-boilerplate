@@ -36,16 +36,16 @@ export const authOptions: NextAuthOptions = {
                 });
 
                 if (!existingUser) {
-                    throw new Error("No user found with this email.");
+                    throw new Error("Invalid username or password.");
                 }
 
                 if (existingUser.password) {
                     const passwordMatch = await compare(credentials.password, existingUser.password);
                     if (!passwordMatch) {
-                        throw new Error("Invalid password.");
+                        throw new Error("Invalid username or password.");
                     }
                 } else {
-                    throw new Error("User registered with different method! Please use another method.");
+                    throw new Error("Invalid username or password");
                 }
 
                 return {

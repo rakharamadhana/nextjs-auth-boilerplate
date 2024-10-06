@@ -12,14 +12,28 @@ interface UserAccountNavProps {
 }
 
 const UserAccountNav: React.FC<UserAccountNavProps> = ({ mobile }) => {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession(); // Add status to check loading state
 
     // Class for user's name on mobile
     const userClass = mobile ? "text-sky-600 text-center text-sm" : "text-sky-600";
 
+    // Show loading skeleton if session is loading
+    if (status === "loading") {
+        return (
+            <div className={`flex ${mobile ? 'flex-col items-stretch' : 'flex-row items-center gap-2 ml-auto p-2'}`}>
+                {!mobile && (
+                    <div className="h-8 w-8 bg-gray-200 rounded-full animate-pulse"></div>
+                )}
+                <div className={`${userClass} h-4 w-24 bg-gray-200 rounded-md animate-pulse`}></div>
+                <div className="flex-grow" />
+                <div className={`h-8 w-20 ${mobile ? 'px-2 py-1' : 'px-4 py-2'} bg-gray-200 rounded-md animate-pulse`}></div>
+            </div>
+        );
+    }
+
     if (session && session.user) {
         return (
-            <div className={`flex ${mobile ? 'flex-col items-stretch' : 'flex-row items-center gap-2 ml-auto p-2'} `}>
+            <div className={`flex ${mobile ? 'flex-col items-stretch' : 'flex-row items-center gap-2 ml-auto p-2'}`}>
                 {!mobile && (
                     <Image
                         src={session.user.image ?? ""}
@@ -46,12 +60,6 @@ const UserAccountNav: React.FC<UserAccountNavProps> = ({ mobile }) => {
             </div>
         );
     }
-
-    return (
-        <Link className={buttonVariants()} href='/sign-in'>
-            Sign in
-        </Link>
-    );
 };
 
 export default UserAccountNav;

@@ -1,14 +1,25 @@
 import User from "@/components/User";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import AnimatedSection from "@/components/AnimatedSection";
-import AnimatedButton from "@/components/AnimatedButton";
+import AnimatedSection from "@/components/animated/AnimatedSection";
+import AnimatedButton from "@/components/animated/AnimatedButton";
+import Hero from "@/components/home/Hero";
+import RecentNews from "@/components/home/RecentNews";
+import RecentActivities from "@/components/home/RecentActivities";
+import OurMentor from "@/components/home/OurMentor";
+import Testimonies from "@/components/home/Testimonies";
 
 export default async function Home() {
     const session = await getServerSession(authOptions);
 
     return (
         <div className="flex flex-col items-center justify-center w-full fade-in">
+            <Hero />
+            <RecentNews />
+            <RecentActivities />
+            <OurMentor />
+            <Testimonies />
+
             <section
                 className="text-center mt-12"
             >
@@ -20,20 +31,14 @@ export default async function Home() {
                 </p>
             </section>
 
-            <AnimatedSection
+            <section
                 className="mt-2 w-full max-w-2xl"
-                initial={{ opacity: 0, x:20 }} // Custom initial state for the user section
-                animate={{ opacity: 1, x:0 }} // Custom animate state for the user section
-                transition={{ duration: 0.5, delay: 0.3 }} // Staggered delay for the user section
             >
                 <User />
-            </AnimatedSection>
+            </section>
 
-            <AnimatedSection
+            <section
                 className="mt-2 w-full max-w-2xl"
-                initial={{ opacity: 0, x:-20 }} // Custom initial state for the session info section
-                animate={{ opacity: 1, x:0 }} // Custom animate state for the session info section
-                transition={{ duration: 0.5, delay: 0.5 }} // Staggered delay for the session info section
             >
                 <div className="border rounded-md p-6 mt-6 bg-white shadow-lg w-full">
                     <h2 className="text-lg font-semibold">Server Session</h2>
@@ -41,7 +46,7 @@ export default async function Home() {
                         {JSON.stringify(session, null, 2)}
                     </pre>
                 </div>
-            </AnimatedSection>
+            </section>
 
             <section className="mt-12 flex space-x-4">
                 <AnimatedButton href="/" className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">

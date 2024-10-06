@@ -4,6 +4,8 @@ import { authOptions } from "@/lib/auth";
 import UserAccountNav from "@/components/UserAccountNav";
 import Image from "next/image";
 import MobileMenuToggle from "@/components/navbar/MobileMenuToggle";
+import {buttonVariants} from "@/components/ui/button";
+import React from "react";
 
 const Navbar = async () => {
     const session = await getServerSession(authOptions);
@@ -44,7 +46,13 @@ const Navbar = async () => {
 
                 {/* Centered - Sign In/Sign Out */}
                 <div className="hidden md:flex items-center space-x-4"> {/* Only show on desktop */}
-                    <UserAccountNav />
+                    { session ? (
+                        <UserAccountNav />
+                    ) : (
+                        <Link className={buttonVariants()} href='/sign-in'>
+                            Sign in
+                        </Link>
+                    )}
                 </div>
             </div>
         </header>

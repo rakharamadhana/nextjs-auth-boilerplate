@@ -2,8 +2,8 @@ import { getServerSession } from "next-auth";
 import React from "react";
 import { authOptions } from "@/lib/auth";
 import Image from "next/image";
-import AnimatedSection from "@/components/AnimatedSection";
-import AnimatedButton from "@/components/AnimatedButton";
+import AnimatedSection from "@/components/animated/AnimatedSection";
+import AnimatedButton from "@/components/animated/AnimatedButton";
 import EditProfileForm from "@/components/form/EditProfileForm";
 
 const ProfilePage = async () => {
@@ -15,10 +15,7 @@ const ProfilePage = async () => {
 
             {/* Profile Image */}
             {session ? (
-                <AnimatedSection
-                    initial={{ opacity: 0, scale: 0.5 }}
-                    animate={{opacity: 1, scale: 1}}
-                    transition={{duration: 0.5, delay: 0.3, ease: "easeOut" }}
+                <section
                     className="flex flex-col items-center">
                     <Image
                         src={session?.user.image ?? "/default-profile.png"}
@@ -30,18 +27,15 @@ const ProfilePage = async () => {
                     <p className="text-lg font-semibold text-gray-700 mb-2">
                         Hello, <span className="text-indigo-600">{session?.user.name}</span>
                     </p>
-                </AnimatedSection>
+                </section>
             ) : null}
 
             {/* Profile Information */}
-            <AnimatedSection
-                initial={{opacity: 0, x: -20}}
-                animate={{opacity: 1, x: 0}}
-                transition={{duration: 0.5, delay: 0.5}}
-                className="border bg-white shadow-lg rounded-lg p-6 mt-6 w-full max-w-xl mx-auto">
+            <section
+                className="border bg-white shadow-lg rounded-lg p-6 mt-6 w-[30rem] max-w-xl mx-auto">
                 <h2 className="text-xl font-bold text-indigo-700 mb-4 text-center">Account Information</h2>
                 <EditProfileForm />
-            </AnimatedSection>
+            </section>
 
 
             {/* Actions Section */}

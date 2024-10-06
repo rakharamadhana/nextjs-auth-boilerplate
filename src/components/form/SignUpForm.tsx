@@ -17,6 +17,7 @@ import Link from 'next/link';
 import GoogleSignInButton from '../GoogleSignInButton';
 import { useRouter } from "next/navigation";
 import { useToast } from "@/hooks/use-toast";
+import { useState } from "react";
 
 const FormSchema = z
     .object({
@@ -35,6 +36,7 @@ const FormSchema = z
     });
 
 const SignUpForm = () => {
+    const [isLoading, setIsLoading] = useState(false)
     const router = useRouter();
     const { toast } = useToast();
     const form = useForm<z.infer<typeof FormSchema>>({
@@ -49,78 +51,99 @@ const SignUpForm = () => {
     });
 
     const onSubmit = async (values: z.infer<typeof FormSchema>) => {
-        const response = await fetch('/api/user', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username: values.username,
-                email: values.email,
-                password: values.password,
-                name: values.name,
+        setIsLoading(true)
+        try {
+            const response = await fetch('/api/user', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username: values.username,
+                    email: values.email,
+                    password: values.password,
+                    name: values.name,
+                })
             })
-        });
 
-        if (response.ok) {
-            router.push('sign-in');
-        } else {
+            if (response.ok) {
+                router.push('sign-in')
+                toast({
+                    title: "Success",
+                    description: "Your account has been created. Please sign in.",
+                })
+            } else {
+                throw new Error('Failed to create account')
+            }
+        } catch (error) {
             toast({
                 title: "Error",
                 description: "Oops! Something went wrong!",
                 variant: 'destructive'
-            });
+            })
+        } finally {
+            setIsLoading(false)
         }
     };
 
     return (
-        <div className="flex flex-col items-center justify-center p-4">
+        <div className="mx-auto md:w-[25rem] max-w-md space-y-6 p-6">
+            <div className="space-y-2 text-center">
+                <h1 className="text-3xl font-bold text-gray-900">Create an account</h1>
+                <p className="text-gray-600">Enter your details to sign up</p>
+            </div>
             <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className='w-full max-w-sm'>
                     <div className='space-y-4'>
                         <FormField
                             control={form.control}
                             name='name'
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-800">Name</FormLabel>
                                     <FormControl>
-                                        <Input className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500" placeholder='John Doe' {...field} />
+                                        <Input
+                                            className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
+                                            placeholder='John Doe' {...field} />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name='username'
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-800">Username</FormLabel>
                                     <FormControl>
-                                        <Input className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500" placeholder='johndoe' {...field} />
+                                        <Input
+                                            className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
+                                            placeholder='johndoe' {...field} />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name='email'
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-800">Email</FormLabel>
                                     <FormControl>
-                                        <Input className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500" placeholder='mail@example.com' {...field} />
+                                        <Input
+                                            className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
+                                            placeholder='mail@example.com' {...field} />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name='password'
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-800">Password</FormLabel>
                                     <FormControl>
@@ -131,14 +154,14 @@ const SignUpForm = () => {
                                             {...field}
                                         />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
                         <FormField
                             control={form.control}
                             name='confirmPassword'
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <FormItem>
                                     <FormLabel className="text-gray-800">Re-enter Password</FormLabel>
                                     <FormControl>
@@ -149,22 +172,42 @@ const SignUpForm = () => {
                                             {...field}
                                         />
                                     </FormControl>
-                                    <FormMessage />
+                                    <FormMessage/>
                                 </FormItem>
                             )}
                         />
                     </div>
-                    <Button className='w-full mt-6 bg-indigo-600 hover:bg-indigo-700' type='submit'>
-                        Sign up
+                    <Button
+                        className='w-full mt-6 bg-indigo-600 hover:bg-indigo-700'
+                        type='submit'
+                        disabled={isLoading}
+                    >
+                        {isLoading ? (
+                            <>
+                                <svg className="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" stroke="white" strokeWidth="4"
+                                            fill="none"></circle>
+                                    <path fill="white" d="M4 12a8 8 0 0116 0"></path>
+                                </svg>
+                                Signing up...
+                            </>
+                        ) : (
+                            'Sign up'
+                        )}
                     </Button>
                 </form>
-                <div className='mx-auto my-4 flex w-full items-center justify-evenly before:mr-4 before:block before:h-px before:flex-grow before:bg-gray-300 after:ml-4 after:block after:h-px after:flex-grow after:bg-gray-300'>
-                    or
+                <div className="relative">
+                    <div className="absolute inset-0 flex items-center">
+                        <span className="w-full border-t border-gray-300"/>
+                    </div>
+                    <div className="relative flex justify-center text-xs uppercase">
+                        <span className="px-2 text-gray-500">Or</span>
+                    </div>
                 </div>
                 <GoogleSignInButton>Sign up with Google</GoogleSignInButton>
-                <p className='text-center text-sm text-gray-600 mt-2'>
-                    If you already have an account, please&nbsp;
-                    <Link className='text-indigo-600 hover:underline' href='/sign-in'>
+                <p className="text-center text-sm text-gray-600">
+                    Already have an account?{' '}
+                    <Link className="font-medium text-indigo-600 hover:underline" href="/sign-in">
                         Sign in
                     </Link>
                 </p>
