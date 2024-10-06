@@ -5598,6 +5598,7 @@ __metadata:
     react-dom: 18.2.0
     react-error-boundary: ^4.0.13
     react-hook-form: ^7.45.2
+    swiper: ^11.1.14
     tailwind-merge: ^1.14.0
     tailwindcss: 3.3.3
     tailwindcss-animate: ^1.0.6
@@ -7109,6 +7110,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: 53b1e247e68e05db7b3808b99b892bd36fb096e6fba213a06da7fab22045e97597db425c724f2bbd6c99a3c295e1e73f3e4de78592289f38431049e1277ca0ae
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.14":
+  version: 11.1.14
+  resolution: "swiper@npm:11.1.14"
+  checksum: 87bf4c42d893c76d3545d42ad664b78b032f7768c99f3d90d8340c035d661e10e7805c3270df704f8da99508304e8ca87cab61d3c863586d9d231c9f718ae785
   languageName: node
   linkType: hard
 
