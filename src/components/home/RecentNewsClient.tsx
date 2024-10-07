@@ -106,7 +106,7 @@ export default function RecentNewsClient() {
             slidesPerView={4} // Show 4 slides at a time
         >
             {newsItems.map((item) => (
-                <SwiperSlide key={item.id}>
+                <SwiperSlide key={item.id} className='pb-6'>
                     <Card className="overflow-hidden">
                         <Image
                             src={item.imageUrl}
