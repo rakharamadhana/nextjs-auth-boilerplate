@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { Autoplay } from "swiper/modules";
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
+import {useScroll, useTransform, motion} from "framer-motion";
 
 // Simulated function to fetch mentor data
 async function getMentors() {
@@ -78,54 +79,71 @@ export default function OurMentorClient() {
         fetchData();
     }, []);
 
+    const ref = useRef<HTMLDivElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: ref,
+
+    });
+
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]); // Scale up at the top and down at the bottom
+
     return (
-        <Swiper
-            modules={[Autoplay]}
-            spaceBetween={30}
-            loop={true} // Enable looping
-            autoplay={{
-                delay: 0, // Set delay to 0 for continuous movement
-                pauseOnMouseEnter: true,
-                disableOnInteraction: false,
+        <motion.div
+            ref={ref}
+            style={{
+                scale: scale,
             }}
-            speed={3000} // Set speed for smoother effect (you can adjust this)
-            breakpoints={{
-                // Responsive breakpoints
-                640: {
-                    slidesPerView: 2, // Show 2 slides at a time on small screens
-                },
-                768: {
-                    slidesPerView: 3, // Show 3 slides at a time on medium screens
-                },
-                1024: {
-                    slidesPerView: 4, // Show 4 slides at a time on large screens
-                },
-            }}
+            transition={{ duration: 0.3 }} // Optional: for smoother transitions
         >
-            {mentorItems.map((mentor) => (
-                <SwiperSlide key={mentor.id}>
-                    <Card className="flex flex-col items-center text-center p-4 border-0 shadow-none">
-                        {/* Circular Image */}
-                        <div className="w-40 h-40 mb-4">
-                            <Image
-                                src={mentor.imageUrl}
-                                alt={mentor.name}
-                                width={160}
-                                height={160}
-                                className="rounded-full object-cover"
-                            />
-                        </div>
-                        {/* Mentor Info */}
-                        <CardHeader>
-                            <CardTitle className="text-lg font-semibold">{mentor.name}</CardTitle>
-                            <CardDescription className="text-gray-500">{mentor.expertise}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p className="text-gray-700">{mentor.bio}</p>
-                        </CardContent>
-                    </Card>
-                </SwiperSlide>
-            ))}
-        </Swiper>
+            <Swiper
+                modules={[Autoplay]}
+                spaceBetween={30}
+                loop={true} // Enable looping
+                autoplay={{
+                    delay: 0, // Set delay to 0 for continuous movement
+                    pauseOnMouseEnter: true,
+                    disableOnInteraction: false,
+                }}
+                speed={3000} // Set speed for smoother effect (you can adjust this)
+                breakpoints={{
+                    // Responsive breakpoints
+                    640: {
+                        slidesPerView: 2, // Show 2 slides at a time on small screens
+                    },
+                    768: {
+                        slidesPerView: 3, // Show 3 slides at a time on medium screens
+                    },
+                    1024: {
+                        slidesPerView: 4, // Show 4 slides at a time on large screens
+                    },
+                }}
+            >
+                {mentorItems.map((mentor) => (
+                    <SwiperSlide key={mentor.id}>
+                        <Card className="flex flex-col items-center text-center p-4 border-0 shadow-none">
+                            {/* Circular Image */}
+                            <div className="w-40 h-40 mb-4">
+                                <Image
+                                    src={mentor.imageUrl}
+                                    alt={mentor.name}
+                                    width={160}
+                                    height={160}
+                                    className="rounded-full object-cover"
+                                />
+                            </div>
+                            {/* Mentor Info */}
+                            <CardHeader>
+                                <CardTitle className="text-lg font-semibold">{mentor.name}</CardTitle>
+                                <CardDescription className="text-gray-500">{mentor.expertise}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-gray-700">{mentor.bio}</p>
+                            </CardContent>
+                        </Card>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </motion.div>
     );
 }

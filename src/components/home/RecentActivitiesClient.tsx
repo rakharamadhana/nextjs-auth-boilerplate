@@ -5,10 +5,10 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css/bundle';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useScroll, useTransform, motion } from "framer-motion";
 
 async function getRecentActivities() {
-    // Simulate an API call
     await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
     return [
         { id: 1, title: "Completed Project X", description: "Successfully delivered the milestone for Project X.", date: "2023-10-02", imageUrl: "https://placehold.co/400x200.png" },
@@ -28,8 +28,13 @@ type ActivitiesItem = {
 };
 
 export default function RecentActivitiesClient() {
+    const ref = useRef<HTMLDivElement>(null);
+    const { scrollYProgress } = useScroll({ target: ref }); // Track the scroll progress
     const [activityItems, setActivityItems] = useState<ActivitiesItem[]>([]);
     const [loading, setLoading] = useState(true);
+
+    // Define your scroll offset values
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.8, 1, 0.8]); // Scale up at the top and down at the bottom
 
     useEffect(() => {
         const fetchData = async () => {
@@ -45,7 +50,6 @@ export default function RecentActivitiesClient() {
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 3 }).map((_, index) => (
                     <Card key={index} className="overflow-hidden animate-pulse">
-                        {/* Placeholder image */}
                         <div className="h-48 bg-gray-300"></div>
                         <CardHeader>
                             <CardTitle className="h-6 bg-gray-300 rounded w-3/4 mb-2"></CardTitle>
@@ -61,51 +65,50 @@ export default function RecentActivitiesClient() {
     }
 
     return (
-        <Swiper
-            modules={[Autoplay]}
-            autoplay={{
-                delay: 3000,
-                pauseOnMouseEnter: true,
-                disableOnInteraction: false,
+        <motion.div
+            ref={ref}
+            style={{
+                scale: scale
             }}
-            spaceBetween={30}
-            loop={true}
-            speed={3000}
-            breakpoints={{
-                // When window width is >= 640px (mobile devices)
-                640: {
-                    slidesPerView: 1,
-                },
-                // When window width is >= 768px (tablets)
-                768: {
-                    slidesPerView: 2,
-                },
-                // When window width is >= 1024px (desktops)
-                1024: {
-                    slidesPerView: 3,
-                },
-            }}
+            transition={{ duration: 0.3 }} // Optional: for smoother transitions
         >
-            {activityItems.map((item) => (
-                <SwiperSlide key={item.id} className='pb-6'>
-                    <Card className="overflow-hidden">
-                        <Image
-                            src={item.imageUrl}
-                            alt={item.title}
-                            width={400}
-                            height={200}
-                            className="w-full h-48 object-cover"
-                        />
-                        <CardHeader>
-                            <CardTitle>{item.title}</CardTitle>
-                            <CardDescription>{new Date(item.date).toLocaleDateString()}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p>{item.description}</p>
-                        </CardContent>
-                    </Card>
-                </SwiperSlide>
-            ))}
-        </Swiper>
+            <Swiper
+                modules={[Autoplay]}
+                autoplay={{
+                    delay: 3000,
+                    pauseOnMouseEnter: true,
+                    disableOnInteraction: false,
+                }}
+                spaceBetween={30}
+                loop={true}
+                speed={3000}
+                breakpoints={{
+                    640: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                }}
+            >
+                {activityItems.map((item) => (
+                    <SwiperSlide key={item.id} className='pb-6'>
+                        <Card className="overflow-hidden hover:bg-gray-100 transition-colors duration-100">
+                            <Image
+                                src={item.imageUrl}
+                                alt={item.title}
+                                width={400}
+                                height={200}
+                                className="w-full h-48 object-cover"
+                            />
+                            <CardHeader>
+                                <CardTitle>{item.title}</CardTitle>
+                                <CardDescription>{new Date(item.date).toLocaleDateString()}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <p>{item.description}</p>
+                            </CardContent>
+                        </Card>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </motion.div>
     );
 }

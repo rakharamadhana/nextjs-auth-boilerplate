@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules'; // Import Autoplay module
 import 'swiper/css/bundle';
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
+import {useScroll, useTransform, motion} from "framer-motion";
 
 // Simulated function to fetch testimonies data
 async function getTestimonies() {
@@ -64,56 +65,73 @@ export default function TestimoniesClient() {
         fetchData();
     }, []);
 
+    const ref = useRef<HTMLDivElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: ref,
+
+    });
+
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]); // Scale up at the top and down at the bottom
+
     return (
-        <Swiper
-            modules={[Autoplay]} // Add Autoplay module
-            autoplay={{
-                delay: 3000, // Delay between transitions (3 seconds)
-                disableOnInteraction: false, // Allow autoplay to continue after user interactions
+        <motion.div
+            ref={ref}
+            style={{
+                scale: scale
             }}
-            spaceBetween={30}
-            speed={1000}
-            breakpoints={{
-                // Responsive breakpoints
-                640: {
-                    slidesPerView: 1, // Show 1 slide at a time on small screens
-                },
-                768: {
-                    slidesPerView: 2, // Show 2 slides at a time on medium screens
-                },
-                1024: {
-                    slidesPerView: 3, // Show 3 slides at a time on large screens
-                },
-            }}
+            transition={{ duration: 0.3 }} // Optional: for smoother transitions
         >
-            {testimonyItems.map((testimony) => (
-                <SwiperSlide key={testimony.id} className='pb-6'>
-                    <Card className="p-6 bg-white shadow-lg rounded-lg">
-                        {/* Testimony Info */}
-                        <div className="flex items-start">
-                            {/* Circular Image */}
-                            <div className="w-16 h-16 flex-shrink-0 mr-4">
-                                <Image
-                                    src={testimony.imageUrl}
-                                    alt={testimony.name}
-                                    width={64}
-                                    height={64}
-                                    className="rounded-full object-cover"
-                                />
+            <Swiper
+                modules={[Autoplay]} // Add Autoplay module
+                autoplay={{
+                    delay: 3000, // Delay between transitions (3 seconds)
+                    disableOnInteraction: false, // Allow autoplay to continue after user interactions
+                }}
+                spaceBetween={30}
+                speed={1000}
+                breakpoints={{
+                    // Responsive breakpoints
+                    640: {
+                        slidesPerView: 1, // Show 1 slide at a time on small screens
+                    },
+                    768: {
+                        slidesPerView: 2, // Show 2 slides at a time on medium screens
+                    },
+                    1024: {
+                        slidesPerView: 3, // Show 3 slides at a time on large screens
+                    },
+                }}
+            >
+                {testimonyItems.map((testimony) => (
+                    <SwiperSlide key={testimony.id} className='pb-6'>
+                        <Card className="p-6 bg-white shadow-lg rounded-lg">
+                            {/* Testimony Info */}
+                            <div className="flex items-start">
+                                {/* Circular Image */}
+                                <div className="w-16 h-16 flex-shrink-0 mr-4">
+                                    <Image
+                                        src={testimony.imageUrl}
+                                        alt={testimony.name}
+                                        width={64}
+                                        height={64}
+                                        className="rounded-full object-cover"
+                                    />
+                                </div>
+                                <div>
+                                    <CardHeader className="p-0">
+                                        <CardTitle className="text-xl font-semibold">{testimony.name}</CardTitle>
+                                        <CardDescription className="text-gray-500">{testimony.occupation}</CardDescription>
+                                    </CardHeader>
+                                </div>
                             </div>
-                            <div>
-                                <CardHeader className="p-0">
-                                    <CardTitle className="text-xl font-semibold">{testimony.name}</CardTitle>
-                                    <CardDescription className="text-gray-500">{testimony.occupation}</CardDescription>
-                                </CardHeader>
-                            </div>
-                        </div>
-                        <CardContent className="mt-4">
-                            <p className="italic text-gray-700">&quot;{testimony.feedback}&quot;</p>
-                        </CardContent>
-                    </Card>
-                </SwiperSlide>
-            ))}
-        </Swiper>
+                            <CardContent className="mt-4">
+                                <p className="italic text-gray-700">&quot;{testimony.feedback}&quot;</p>
+                            </CardContent>
+                        </Card>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </motion.div>
     );
 }

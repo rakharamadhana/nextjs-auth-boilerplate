@@ -1,14 +1,15 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules'; // Import Autoplay module
+import { motion, useScroll, useTransform } from 'framer-motion';
 
 import 'swiper/css/bundle';
 
-// Simulated function to fetch news data (you may keep this in the server-side component if you prefer)
+// Simulated function to fetch news data
 async function getRecentNews() {
     await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
     return [
@@ -29,7 +30,7 @@ type NewsItem = {
 };
 
 export default function RecentNewsClient() {
-    const [newsItems, setNewsItems] = useState<NewsItem[]>([]); // Explicitly set the state type
+    const [newsItems, setNewsItems] = useState<NewsItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -41,12 +42,20 @@ export default function RecentNewsClient() {
         fetchData();
     }, []);
 
+    const ref = useRef<HTMLDivElement>(null);
+
+    const { scrollYProgress } = useScroll({
+        target: ref,
+
+    });
+
+    const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.6]); // Scale up at the top and down at the bottom
+
     if (loading) {
         return (
             <div className="flex space-x-6">
                 {Array.from({ length: 4 }).map((_, index) => (
                     <Card key={index} className="overflow-hidden animate-pulse w-72">
-                        {/* Placeholder image */}
                         <div className="h-48 bg-gray-300"></div>
                         <CardHeader>
                             <CardTitle className="h-6 bg-gray-300 rounded w-3/4 mb-2"></CardTitle>
@@ -62,55 +71,51 @@ export default function RecentNewsClient() {
     }
 
     return (
-        <Swiper
-            modules={[Autoplay]}
-            autoplay={{
-                delay: 2000,
-                pauseOnMouseEnter: true,
-                disableOnInteraction: false,
+        <motion.div
+            ref={ref}
+            style={{
+                scale: scale,
             }}
-            spaceBetween={30}
-            loop={true}
-            speed={2000}
-            breakpoints={{
-                // When window width is >= 640px (mobile devices)
-                640: {
-                    slidesPerView: 1, // 1 slide
-                },
-                // When window width is >= 768px (tablets)
-                768: {
-                    slidesPerView: 2, // 2 slides
-                },
-                // When window width is >= 1024px (desktops)
-                1024: {
-                    slidesPerView: 3, // 3 slides
-                },
-                // When window width is >= 1280px (large desktops)
-                1280: {
-                    slidesPerView: 4, // 4 slides
-                },
-            }}
+            transition={{ duration: 0.3 }} // Optional: for smoother transitions
         >
-            {newsItems.map((item) => (
-                <SwiperSlide key={item.id} className="pb-6">
-                    <Card className="overflow-hidden">
-                        <Image
-                            src={item.imageUrl}
-                            alt={item.title}
-                            width={400}
-                            height={200}
-                            className="w-full h-48 object-cover"
-                        />
-                        <CardHeader>
-                            <CardTitle>{item.title}</CardTitle>
-                            <CardDescription>{new Date(item.date).toLocaleDateString()}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                            <p>{item.description}</p>
-                        </CardContent>
-                    </Card>
-                </SwiperSlide>
-            ))}
-        </Swiper>
+            <Swiper
+                modules={[Autoplay]}
+                autoplay={{
+                    delay: 2000,
+                    pauseOnMouseEnter: true,
+                    disableOnInteraction: false,
+                }}
+                spaceBetween={30}
+                loop={true}
+                speed={2000}
+                breakpoints={{
+                    640: { slidesPerView: 1 },
+                    768: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 },
+                    1280: { slidesPerView: 4 },
+                }}
+            >
+                {newsItems.map((item) => (
+                    <SwiperSlide key={item.id} className="pb-6">
+                        <Card className="overflow-hidden hover:bg-gray-100 transition-colors duration-100">
+                            <Image
+                                src={item.imageUrl}
+                                alt={item.title}
+                                width={400}
+                                height={200}
+                                className="w-full h-48 object-cover"
+                            />
+                            <CardHeader>
+                                <CardTitle>{item.title}</CardTitle>
+                                <CardDescription>{new Date(item.date).toLocaleDateString()}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                                <p>{item.description}</p>
+                            </CardContent>
+                        </Card>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </motion.div>
     );
 }

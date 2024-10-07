@@ -1,6 +1,6 @@
 import RecentNewsClient from './RecentNewsClient';
 
-export default async function RecentNewsLayout() {
+export default function RecentNewsLayout() {
     return (
         <section className="py-8 sm:py-12 w-full">
             <div className="container mx-auto px-4 md:px-8 lg:px-12">

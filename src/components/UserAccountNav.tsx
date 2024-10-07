@@ -33,7 +33,7 @@ const UserAccountNav: React.FC<UserAccountNavProps> = ({ mobile }) => {
 
     if (session && session.user) {
         return (
-            <div className={`flex ${mobile ? 'flex-col items-stretch' : 'flex-row items-center gap-2 ml-auto p-2'}`}>
+            <div className={`flex ${mobile ? 'flex-col items-stretch' : 'flex-row items-center gap-2 ml-auto'}`}>
                 {!mobile && (
                     <Image
                         src={session.user.image ?? ""}
