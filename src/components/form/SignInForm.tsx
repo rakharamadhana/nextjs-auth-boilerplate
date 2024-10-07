@@ -117,7 +117,7 @@ const SignInForm = () => {
                         <span className="w-full border-t border-gray-300"/>
                     </div>
                     <div className="relative flex justify-center text-xs uppercase">
-                        <span className="px-2 text-gray-500">Or continue with</span>
+                        <span className="px-2 bg-slate-200 text-gray-500">Or continue with</span>
                     </div>
                 </div>
                 <GoogleSignInButton>Sign in with Google</GoogleSignInButton>

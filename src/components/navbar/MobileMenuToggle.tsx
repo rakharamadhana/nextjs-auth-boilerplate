@@ -1,15 +1,15 @@
-// src/components/MobileMenuToggle.tsx
 'use client';
 
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import UserAccountNav from "@/components/UserAccountNav";
-import {buttonVariants} from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
 
 const MobileMenuToggle = () => {
     const [isOpen, setIsOpen] = useState(false);
     const session = useSession();
+    const menuRef = useRef<HTMLDivElement>(null); // Create a ref for the menu
 
     // Check if the user is an admin
     const isAdmin = session?.data?.user.role === 'admin';
@@ -18,8 +18,25 @@ const MobileMenuToggle = () => {
         setIsOpen(false); // Close the menu when a link is clicked
     };
 
+    // Close the menu when clicking outside of it
+    const handleClickOutside = (event: MouseEvent) => {
+        if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+            setIsOpen(false);
+        }
+    };
+
+    useEffect(() => {
+        // Attach event listener
+        document.addEventListener("mousedown", handleClickOutside);
+
+        return () => {
+            // Clean up the event listener on component unmount
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
     return (
-        <div className="relative">
+        <div className="relative" ref={menuRef}>
             {/* Mobile Menu Toggle Button */}
             <div className="md:hidden">
                 <button
@@ -50,7 +67,7 @@ const MobileMenuToggle = () => {
                         </Link>
                     )}
 
-                    { session?.data ? (
+                    {session?.data ? (
                         <UserAccountNav mobile={true} />
                     ) : (
                         <Link className={buttonVariants()} href='/sign-in'>
