@@ -2,9 +2,10 @@
 'use client';
 
 import Link from "next/link";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useSession } from "next-auth/react";
 import UserAccountNav from "@/components/UserAccountNav";
+import {buttonVariants} from "@/components/ui/button";
 
 const MobileMenuToggle = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -48,8 +49,14 @@ const MobileMenuToggle = () => {
                             My Profile
                         </Link>
                     )}
-                    {/* Pass mobile={true} to UserAccountNav */}
-                    <UserAccountNav mobile={true} />
+
+                    { session?.data ? (
+                        <UserAccountNav mobile={true} />
+                    ) : (
+                        <Link className={buttonVariants()} href='/sign-in'>
+                            Sign in
+                        </Link>
+                    )}
                 </div>
             </div>
         </div>
