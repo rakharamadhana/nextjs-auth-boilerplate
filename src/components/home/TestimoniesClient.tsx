@@ -1,17 +1,16 @@
-"use client"
+"use client";
 
 import Image from 'next/image';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules'; // Import Autoplay module
-
 import 'swiper/css/bundle';
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 // Simulated function to fetch testimonies data
 async function getTestimonies() {
     // In a real application, this would be an API call
-    await new Promise(resolve => setTimeout(resolve, 500)) // Simulate API delay
+    await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
     return [
         {
             id: 1,
@@ -41,7 +40,7 @@ async function getTestimonies() {
             occupation: "Software Engineer",
             imageUrl: "https://placehold.co/100x100.png"
         }
-    ]
+    ];
 }
 
 type TestimonyItem = {
@@ -74,10 +73,21 @@ export default function TestimoniesClient() {
             }}
             spaceBetween={30}
             speed={1000}
-            slidesPerView={3} // Adjust this for how many slides you want to show at once
+            breakpoints={{
+                // Responsive breakpoints
+                640: {
+                    slidesPerView: 1, // Show 1 slide at a time on small screens
+                },
+                768: {
+                    slidesPerView: 2, // Show 2 slides at a time on medium screens
+                },
+                1024: {
+                    slidesPerView: 3, // Show 3 slides at a time on large screens
+                },
+            }}
         >
             {testimonyItems.map((testimony) => (
-                <SwiperSlide key={testimony.id}>
+                <SwiperSlide key={testimony.id} className='pb-6'>
                     <Card className="p-6 bg-white shadow-lg rounded-lg">
                         {/* Testimony Info */}
                         <div className="flex items-start">
@@ -105,5 +115,5 @@ export default function TestimoniesClient() {
                 </SwiperSlide>
             ))}
         </Swiper>
-    )
+    );
 }

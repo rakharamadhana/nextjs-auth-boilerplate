@@ -10,44 +10,13 @@ import 'swiper/css/bundle';
 
 // Simulated function to fetch news data (you may keep this in the server-side component if you prefer)
 async function getRecentNews() {
-    // In a real application, this would be an API call
     await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
     return [
-        {
-            id: 1,
-            title: "New Breakthrough in Quantum Computing",
-            description: "Scientists achieve major milestone in quantum supremacy.",
-            date: "2023-10-05",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
-        {
-            id: 2,
-            title: "Global Climate Summit Announces New Targets",
-            description: "World leaders agree on ambitious goals to combat climate change.",
-            date: "2023-10-04",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
-        {
-            id: 3,
-            title: "Tech Giant Unveils Revolutionary AI Assistant",
-            description: "New AI technology promises to transform daily life and work.",
-            date: "2023-10-03",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
-        {
-            id: 4,
-            title: "Advancements in Renewable Energy Technologies",
-            description: "New technologies are making renewable energy more efficient and affordable.",
-            date: "2023-10-02",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
-        {
-            id: 5,
-            title: "Breakthroughs in Cancer Research",
-            description: "Researchers discover new methods to treat various types of cancer.",
-            date: "2023-10-01",
-            imageUrl: "https://placehold.co/400x200.png"
-        }
+        { id: 1, title: "New Breakthrough in Quantum Computing", description: "Scientists achieve major milestone in quantum supremacy.", date: "2023-10-05", imageUrl: "https://placehold.co/400x200.png" },
+        { id: 2, title: "Global Climate Summit Announces New Targets", description: "World leaders agree on ambitious goals to combat climate change.", date: "2023-10-04", imageUrl: "https://placehold.co/400x200.png" },
+        { id: 3, title: "Tech Giant Unveils Revolutionary AI Assistant", description: "New AI technology promises to transform daily life and work.", date: "2023-10-03", imageUrl: "https://placehold.co/400x200.png" },
+        { id: 4, title: "Advancements in Renewable Energy Technologies", description: "New technologies are making renewable energy more efficient and affordable.", date: "2023-10-02", imageUrl: "https://placehold.co/400x200.png" },
+        { id: 5, title: "Breakthroughs in Cancer Research", description: "Researchers discover new methods to treat various types of cancer.", date: "2023-10-01", imageUrl: "https://placehold.co/400x200.png" }
     ];
 }
 
@@ -102,11 +71,28 @@ export default function RecentNewsClient() {
             }}
             spaceBetween={30}
             loop={true}
-            speed={2000} // Set speed for smoother effect (you can adjust this)
-            slidesPerView={4} // Show 4 slides at a time
+            speed={2000}
+            breakpoints={{
+                // When window width is >= 640px (mobile devices)
+                640: {
+                    slidesPerView: 1, // 1 slide
+                },
+                // When window width is >= 768px (tablets)
+                768: {
+                    slidesPerView: 2, // 2 slides
+                },
+                // When window width is >= 1024px (desktops)
+                1024: {
+                    slidesPerView: 3, // 3 slides
+                },
+                // When window width is >= 1280px (large desktops)
+                1280: {
+                    slidesPerView: 4, // 4 slides
+                },
+            }}
         >
             {newsItems.map((item) => (
-                <SwiperSlide key={item.id} className='pb-6'>
+                <SwiperSlide key={item.id} className="pb-6">
                     <Card className="overflow-hidden">
                         <Image
                             src={item.imageUrl}

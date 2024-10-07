@@ -13,21 +13,28 @@ export default async function Home() {
     const session = await getServerSession(authOptions);
 
     return (
-        <div className="flex flex-col items-center justify-center w-full fade-in">
+        <div className="flex flex-col items-center justify-center mx-auto container w-full">
             <Hero />
             <RecentNews />
             <RecentActivities />
             <OurMentor />
             <Testimonies />
 
-            <section className="py-12 flex space-x-4">
-                <AnimatedButton href="/" className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
+            <section className="py-2 sm:py-4 flex flex-col md:flex-row md:space-x-4">
+                <AnimatedButton
+                    href="/"
+                    className="mb-4 md:mb-0 px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
+                >
                     Get Started
                 </AnimatedButton>
-                <AnimatedButton href="/" className="px-6 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400">
+                <AnimatedButton
+                    href="/"
+                    className="px-6 py-2 bg-gray-300 text-black rounded-md hover:bg-gray-400"
+                >
                     Explore Courses
                 </AnimatedButton>
             </section>
+
         </div>
     );
 }

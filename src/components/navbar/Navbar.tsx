@@ -15,7 +15,7 @@ const Navbar = async () => {
 
     return (
         <header className='bg-zinc-100 py-2 border-b border-s-zinc-200 w-full z-10 top-0 px-4'>
-            <div className='container mx-auto flex items-center justify-between p-4 md:p-0'>
+            <div className='container mx-auto flex items-center justify-between md:p-0'>
                 {/* Left Side - Logo and Menu */}
                 <div className="flex items-center space-x-6">
                     <Link href='/' passHref>

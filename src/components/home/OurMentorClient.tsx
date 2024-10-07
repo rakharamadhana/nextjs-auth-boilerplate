@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper-bundle.css';
 import { Autoplay } from "swiper/modules";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 
 // Simulated function to fetch mentor data
 async function getMentors() {
@@ -82,7 +82,6 @@ export default function OurMentorClient() {
         <Swiper
             modules={[Autoplay]}
             spaceBetween={30}
-            slidesPerView={4} // Show 4 slides at a time
             loop={true} // Enable looping
             autoplay={{
                 delay: 0, // Set delay to 0 for continuous movement
@@ -90,6 +89,18 @@ export default function OurMentorClient() {
                 disableOnInteraction: false,
             }}
             speed={3000} // Set speed for smoother effect (you can adjust this)
+            breakpoints={{
+                // Responsive breakpoints
+                640: {
+                    slidesPerView: 2, // Show 2 slides at a time on small screens
+                },
+                768: {
+                    slidesPerView: 3, // Show 3 slides at a time on medium screens
+                },
+                1024: {
+                    slidesPerView: 4, // Show 4 slides at a time on large screens
+                },
+            }}
         >
             {mentorItems.map((mentor) => (
                 <SwiperSlide key={mentor.id}>

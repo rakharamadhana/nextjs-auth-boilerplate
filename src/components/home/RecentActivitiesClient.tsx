@@ -1,52 +1,21 @@
-"use client"
+"use client";
 
-import Image from 'next/image'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import Image from 'next/image';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
-
 import 'swiper/css/bundle';
 import { useEffect, useState } from 'react';
 
 async function getRecentActivities() {
-    // In a real application, this would be an API call
+    // Simulate an API call
     await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
     return [
-        {
-            id: 1,
-            title: "Completed Project X",
-            description: "Successfully delivered the milestone for Project X.",
-            date: "2023-10-02",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
-        {
-            id: 2,
-            title: "Team Building Workshop",
-            description: "Attended a workshop on effective team collaboration.",
-            date: "2023-09-28",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
-        {
-            id: 3,
-            title: "Client Meeting",
-            description: "Held a meeting with a major client to discuss new opportunities.",
-            date: "2023-09-25",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
-        {
-            id: 4,
-            title: "Launched New Marketing Campaign",
-            description: "Successfully launched a new marketing campaign.",
-            date: "2023-09-20",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
-        {
-            id: 5,
-            title: "Conducted User Research",
-            description: "Conducted user research for upcoming product features.",
-            date: "2023-09-15",
-            imageUrl: "https://placehold.co/400x200.png"
-        },
+        { id: 1, title: "Completed Project X", description: "Successfully delivered the milestone for Project X.", date: "2023-10-02", imageUrl: "https://placehold.co/400x200.png" },
+        { id: 2, title: "Team Building Workshop", description: "Attended a workshop on effective team collaboration.", date: "2023-09-28", imageUrl: "https://placehold.co/400x200.png" },
+        { id: 3, title: "Client Meeting", description: "Held a meeting with a major client to discuss new opportunities.", date: "2023-09-25", imageUrl: "https://placehold.co/400x200.png" },
+        { id: 4, title: "Launched New Marketing Campaign", description: "Successfully launched a new marketing campaign.", date: "2023-09-20", imageUrl: "https://placehold.co/400x200.png" },
+        { id: 5, title: "Conducted User Research", description: "Conducted user research for upcoming product features.", date: "2023-09-15", imageUrl: "https://placehold.co/400x200.png" },
     ];
 }
 
@@ -59,7 +28,7 @@ type ActivitiesItem = {
 };
 
 export default function RecentActivitiesClient() {
-    const [activityItems, setActivityItems] = useState<ActivitiesItem[]>([]); // Explicitly set the state type
+    const [activityItems, setActivityItems] = useState<ActivitiesItem[]>([]);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -73,9 +42,9 @@ export default function RecentActivitiesClient() {
 
     if (loading) {
         return (
-            <div className="flex space-x-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 3 }).map((_, index) => (
-                    <Card key={index} className="overflow-hidden animate-pulse w-72">
+                    <Card key={index} className="overflow-hidden animate-pulse">
                         {/* Placeholder image */}
                         <div className="h-48 bg-gray-300"></div>
                         <CardHeader>
@@ -94,18 +63,35 @@ export default function RecentActivitiesClient() {
     return (
         <Swiper
             modules={[Autoplay]}
-            autoplay={{ delay: 3000, pauseOnMouseEnter: true, disableOnInteraction: false }} // Adjust delay as needed
+            autoplay={{
+                delay: 3000,
+                pauseOnMouseEnter: true,
+                disableOnInteraction: false,
+            }}
             spaceBetween={30}
             loop={true}
-            speed={3000} // Set speed for smoother effect (you can adjust this)
-            slidesPerView={3} // Adjust this for how many slides you want to show at once
+            speed={3000}
+            breakpoints={{
+                // When window width is >= 640px (mobile devices)
+                640: {
+                    slidesPerView: 1,
+                },
+                // When window width is >= 768px (tablets)
+                768: {
+                    slidesPerView: 2,
+                },
+                // When window width is >= 1024px (desktops)
+                1024: {
+                    slidesPerView: 3,
+                },
+            }}
         >
             {activityItems.map((item) => (
-                <SwiperSlide key={item.id}>
+                <SwiperSlide key={item.id} className='pb-6'>
                     <Card className="overflow-hidden">
                         <Image
                             src={item.imageUrl}
-                            alt=""
+                            alt={item.title}
                             width={400}
                             height={200}
                             className="w-full h-48 object-cover"
@@ -121,5 +107,5 @@ export default function RecentActivitiesClient() {
                 </SwiperSlide>
             ))}
         </Swiper>
-    )
+    );
 }

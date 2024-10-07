@@ -49,7 +49,7 @@ export default function RootLayout({
                 <Navbar/>
 
                 {/* Main content that grows and takes available space */}
-                <main className="flex-grow flex flex-col justify-center items-center max-w-7xl mx-auto p-4">
+                <main className="flex-grow flex flex-col justify-center items-center">
                     {children}
                 </main>
 
