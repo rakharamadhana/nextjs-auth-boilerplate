@@ -20,24 +20,7 @@ export default async function Home() {
             <OurMentor />
             <Testimonies />
 
-            <section
-                className="mt-2 w-full max-w-2xl"
-            >
-                <User />
-            </section>
-
-            <section
-                className="mt-2 w-full max-w-2xl"
-            >
-                <div className="border rounded-md p-6 mt-6 bg-white shadow-lg w-full">
-                    <h2 className="text-lg font-semibold">Server Session</h2>
-                    <pre className="whitespace-pre-wrap text-sm bg-gray-100 p-4 rounded-md">
-                        {JSON.stringify(session, null, 2)}
-                    </pre>
-                </div>
-            </section>
-
-            <section className="mt-12 flex space-x-4">
+            <section className="py-12 flex space-x-4">
                 <AnimatedButton href="/" className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
                     Get Started
                 </AnimatedButton>
