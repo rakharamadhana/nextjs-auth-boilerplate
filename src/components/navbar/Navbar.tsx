@@ -1,24 +1,43 @@
-import Link from 'next/link';
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+"use client";
+
+import Link from "next/link";
 import UserAccountNav from "@/components/UserAccountNav";
 import Image from "next/image";
 import MobileMenuToggle from "@/components/navbar/MobileMenuToggle";
-import {buttonVariants} from "@/components/ui/button";
+import { buttonVariants } from "@/components/ui/button";
+import { motion, useScroll, useTransform } from "framer-motion";
 import React from "react";
 
-const Navbar = async () => {
-    const session = await getServerSession(authOptions);
-
+const Navbar = ({ session }: { session: any }) => {
     // Check if the user is an admin
-    const isAdmin = session?.user?.role === 'admin';
+    const isAdmin = session?.user?.role === "admin";
+
+    // Framer Motion - Use the scroll position to adjust styles
+    const { scrollY } = useScroll();
+
+    // Width and border-radius transformations
+    const navWidth = useTransform(scrollY, [0, 200], ["100%", "90%"]); // Full width to 80% when scrolling
+    const borderRadius = useTransform(scrollY, [0, 200], ["0", "3rem"]); // No border-radius to a rounded one
+
+    // Adjust the top position to create a floating effect
+    const navTop = useTransform(scrollY, [0, 100], ["0rem", "1rem"]); // Start at 3rem from top, move to 0rem
 
     return (
-        <header className='bg-zinc-100 py-2 border-b border-s-zinc-200 w-full z-10 top-0 px-4'>
-            <div className='container mx-auto flex items-center justify-between md:p-0'>
+        <motion.header
+            className="sticky z-10 p-3 mx-auto shadow-sm"
+            style={{
+                backgroundColor: `rgba(255, 255, 255, 0.6)`,
+                width: navWidth,
+                borderRadius: borderRadius,
+                top: navTop, // Use navTop for the top position
+                borderBottom: `1px solid rgba(0, 0, 0, 0.1)`,
+                transition: "all 0.3s ease",
+            }}
+        >
+            <div className="container mx-auto flex items-center justify-between">
                 {/* Left Side - Logo and Menu */}
                 <div className="flex items-center space-x-6">
-                    <Link href='/' passHref>
+                    <Link href="/" passHref>
                         <Image
                             src="/icons/icon512_rounded.png"
                             alt="Logo"
@@ -27,14 +46,20 @@ const Navbar = async () => {
                         />
                     </Link>
                     {/* Menu Items */}
-                    <div className="hidden md:flex space-x-6"> {/* Hide on mobile */}
-                        {isAdmin && ( // Conditionally render Admin Dashboard link
-                            <Link href='/admin' className="text-sm font-medium">
+                    <div className="hidden md:flex space-x-3"> {/* Hide on mobile */}
+                        {isAdmin && (
+                            <Link
+                                href="/admin"
+                                className="text-sm font-medium hover:bg-indigo-100 rounded-lg p-2 transition duration-300 ease-in-out"
+                            >
                                 Dashboard
                             </Link>
                         )}
-                        {session && ( // Conditionally render User Profile link
-                            <Link href='/profile' className="text-sm font-medium">
+                        {session && (
+                            <Link
+                                href="/profile"
+                                className="text-sm font-medium hover:bg-indigo-100 rounded-lg p-2 transition duration-300 ease-in-out"
+                            >
                                 My Profile
                             </Link>
                         )}
@@ -46,16 +71,16 @@ const Navbar = async () => {
 
                 {/* Centered - Sign In/Sign Out */}
                 <div className="hidden md:flex items-center space-x-4"> {/* Only show on desktop */}
-                    { session ? (
+                    {session ? (
                         <UserAccountNav />
                     ) : (
-                        <Link className={buttonVariants()} href='/sign-in'>
+                        <Link className={buttonVariants()} href="/sign-in">
                             Sign in
                         </Link>
                     )}
                 </div>
             </div>
-        </header>
+        </motion.header>
     );
 };
 

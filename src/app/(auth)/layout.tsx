@@ -16,7 +16,7 @@ const AuthLayout: FC<AuthLayoutProps> = async ({ children }) => {
     redirect('/');
   }
 
-  return <AnimatedSection className='bg-slate-200 p-10 rounded-md'>{children}</AnimatedSection>;
+  return <AnimatedSection className='bg-slate-200 py-4 px-8 mx-2 my-4 rounded-md'>{children}</AnimatedSection>;
 };
 
 export default AuthLayout;

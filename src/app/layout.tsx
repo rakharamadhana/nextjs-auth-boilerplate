@@ -5,6 +5,7 @@ import type {Metadata, Viewport} from 'next';
 import { Inter } from 'next/font/google';
 import { Toaster } from "@/components/ui/toaster";
 import Provider from "@/components/Provider";
+import NavbarWrapper from "@/components/navbar/NavbarWrapper";
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -46,7 +47,7 @@ export default function RootLayout({
         <Provider>
             <div className="min-h-screen flex flex-col">
                 {/* Navbar at the top */}
-                <Navbar/>
+                <NavbarWrapper/>
 
                 {/* Main content that grows and takes available space */}
                 <main className="flex-grow flex flex-col justify-center items-center">
