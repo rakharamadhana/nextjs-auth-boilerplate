@@ -19,7 +19,7 @@ const GoogleSignInButton: FC<GoogleSignInButtonProps> = ({ children }) => {
   };
 
   return (
-      <Button variant={'outline'} disabled={isLoading} onClick={loginWithGoogle} className='w-full'>
+      <Button variant={"default"} disabled={isLoading} onClick={loginWithGoogle} className='w-full text-primary dark:text-accent dark:focus:ring-indigo-300 dark:focus:ring-offset-indigo-300 bg-zinc-50'>
         {isLoading ? (
             <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24">
               <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none"></circle>

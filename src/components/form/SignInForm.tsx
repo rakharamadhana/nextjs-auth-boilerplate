@@ -82,7 +82,7 @@ const SignInForm = () => {
                                     <FormLabel className="text-gray-800">Email</FormLabel>
                                     <FormControl>
                                         <Input
-                                            className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
+                                            className="border border-gray-300 dark:bg-zinc-50 dark:focus:ring-indigo-300 dark:focus:ring-offset-indigo-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
                                             placeholder='mail@example.com' {...field} />
                                     </FormControl>
                                     <FormMessage/>
@@ -98,7 +98,7 @@ const SignInForm = () => {
                                     <FormControl>
                                         <Input
                                             type='password'
-                                            className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
+                                            className="border border-gray-300 dark:bg-zinc-50 dark:focus:ring-indigo-300 dark:focus:ring-offset-indigo-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
                                             placeholder='Enter your password'
                                             {...field}
                                         />
@@ -108,7 +108,7 @@ const SignInForm = () => {
                             )}
                         />
                     </div>
-                    <Button className='w-full mt-6 bg-indigo-600 hover:bg-indigo-700' type='submit'>
+                    <Button className='w-full mt-6 bg-indigo-600 hover:bg-indigo-700 dark:focus:ring-indigo-300 dark:focus:ring-offset-indigo-300' type='submit'>
                         Sign in
                     </Button>
                 </form>

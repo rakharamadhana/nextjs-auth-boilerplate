@@ -4,7 +4,7 @@ export default async function Hero() {
             <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-indigo-700">
                 Welcome to the Mentoring Program!
             </h2>
-            <p className="mt-4 text-base sm:text-lg md:text-xl text-gray-700 max-w-2xl mx-auto">
+            <p className="mt-4 text-base sm:text-lg md:text-xl text-primary max-w-2xl mx-auto">
                 Learn, grow, and succeed with personalized mentorship tailored just for you.
             </p>
         </section>
