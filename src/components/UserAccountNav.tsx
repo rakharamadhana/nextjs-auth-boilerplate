@@ -73,7 +73,7 @@ const UserAccountNav: React.FC<UserAccountNavProps> = ({ mobile }) => {
                 {/* Dropdown Menu */}
                 <motion.div
                     ref={dropdownRef} // Attach ref to motion.div
-                    className='absolute top-7 right-0 mt-2 w-48 bg-zinc-50 rounded-lg shadow-lg z-10 p-2'
+                    className='absolute top-7 right-0 mt-2 w-48 bg-zinc-50 rounded-lg shadow-lg dark:shadow-zinc-600 dark:border-2 dark:bg-background dark:border-indigo-600 z-10 p-2'
                     initial={{ scale: 0, opacity: 0 }} // Initial state
                     animate={controls} // Use animation controls
                     exit={{ scale: 0, opacity: 0 }} // Animation when exiting

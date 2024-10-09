@@ -74,6 +74,33 @@ export default function TestimoniesClient() {
 
     const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]); // Scale up at the top and down at the bottom
 
+    if (loading) {
+        return (
+            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center mx-auto'>
+                {Array.from({length: 3}).map((_, index) => (
+                    <Card key={index}
+                          className="overflow-hidden animate-pulse w-full p-3 bg-white dark:bg-gradient-to-b dark:from-indigo-900 dark:to-background shadow-lg dark:shadow-zinc-50 rounded-lg">
+                        {/* Testimony Info */}
+                        <div className="flex items-start">
+                            {/* Circular Image */}
+                            <div className="w-16 h-16 flex-shrink-0 bg-gray-300 rounded-full mr-4">
+                            </div>
+                            <div>
+                                <CardHeader className="p-0">
+                                    <CardTitle className="bg-gray-300 w-28 h-6 rounded-lg"></CardTitle>
+                                    <CardDescription className="bg-gray-300 h-4 rounded-lg"></CardDescription>
+                                </CardHeader>
+                            </div>
+                        </div>
+                        <CardContent className="mt-4">
+                            <p className="italic text-gray-700 dark:text-primary bg-gray-300 w-300 h-20 rounded-lg"></p>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+        );
+    }
+
     return (
         <motion.div
             ref={ref}
@@ -88,7 +115,7 @@ export default function TestimoniesClient() {
                     delay: 3000, // Delay between transitions (3 seconds)
                     disableOnInteraction: false, // Allow autoplay to continue after user interactions
                 }}
-                spaceBetween={30}
+                spaceBetween={15}
                 speed={1000}
                 breakpoints={{
                     // Responsive breakpoints
@@ -104,8 +131,8 @@ export default function TestimoniesClient() {
                 }}
             >
                 {testimonyItems.map((testimony) => (
-                    <SwiperSlide key={testimony.id} className='pb-6'>
-                        <Card className="p-6 bg-white shadow-lg rounded-lg">
+                    <SwiperSlide key={testimony.id} className='pb-6 px-2'>
+                        <Card className="p-3 bg-white dark:bg-gradient-to-b dark:from-indigo-900 dark:to-background shadow-lg dark:shadow-zinc-400 rounded-lg">
                             {/* Testimony Info */}
                             <div className="flex items-start">
                                 {/* Circular Image */}
@@ -120,13 +147,13 @@ export default function TestimoniesClient() {
                                 </div>
                                 <div>
                                     <CardHeader className="p-0">
-                                        <CardTitle className="text-xl font-semibold">{testimony.name}</CardTitle>
-                                        <CardDescription className="text-gray-500">{testimony.occupation}</CardDescription>
+                                        <CardTitle className="text-xl dark:text-primary font-semibold">{testimony.name}</CardTitle>
+                                        <CardDescription className="text-gray-500 dark:text-primary">{testimony.occupation}</CardDescription>
                                     </CardHeader>
                                 </div>
                             </div>
                             <CardContent className="mt-4">
-                                <p className="italic text-gray-700">&quot;{testimony.feedback}&quot;</p>
+                                <p className="italic text-gray-700 dark:text-primary">&quot;{testimony.feedback}&quot;</p>
                             </CardContent>
                         </Card>
                     </SwiperSlide>

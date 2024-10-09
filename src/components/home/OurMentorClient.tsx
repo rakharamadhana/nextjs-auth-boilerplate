@@ -88,6 +88,28 @@ export default function OurMentorClient() {
 
     const scale = useTransform(scrollYProgress, [0, 0.5, 1], [0.9, 1, 0.9]); // Scale up at the top and down at the bottom
 
+    if (loading) {
+        return (
+            <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 place-items-center mx-auto'>
+                {Array.from({length: 4}).map((_, index) => (
+                    <Card key={index} className="flex flex-col items-center text-center p-2 border-0 shadow-none hover:bg-zinc-100 dark:border-2 dark:border-indigo-400 dark:hover:bg-indigo-800 transition-all duration-200">
+                        {/* Circular Image */}
+                        <div className="w-40 h-40 mb-4 bg-gray-300 rounded-full">
+                        </div>
+                        {/* Mentor Info */}
+                        <CardHeader>
+                            <CardTitle className="w-24 h-6 bg-gray-300 rounded-lg items-center mx-auto"></CardTitle>
+                            <CardDescription className="w-32 h-4 bg-gray-300 rounded-lg items-center mx-auto"></CardDescription>
+                        </CardHeader>
+                        <CardContent>
+                            <p className="bg-gray-300 w-40 h-32 rounded-lg items-center mx-auto"></p>
+                        </CardContent>
+                    </Card>
+                ))}
+            </div>
+        );
+    }
+
     return (
         <motion.div
             ref={ref}
@@ -121,7 +143,7 @@ export default function OurMentorClient() {
             >
                 {mentorItems.map((mentor) => (
                     <SwiperSlide key={mentor.id}>
-                        <Card className="flex flex-col items-center text-center p-4 border-0 shadow-none">
+                        <Card className="flex flex-col items-center text-center p-2 border-0 shadow-none hover:bg-zinc-100 dark:border-2 dark:border-indigo-400 dark:hover:bg-indigo-800 transition-all duration-200">
                             {/* Circular Image */}
                             <div className="w-40 h-40 mb-4">
                                 <Image
@@ -135,10 +157,10 @@ export default function OurMentorClient() {
                             {/* Mentor Info */}
                             <CardHeader>
                                 <CardTitle className="text-lg font-semibold">{mentor.name}</CardTitle>
-                                <CardDescription className="text-gray-500">{mentor.expertise}</CardDescription>
+                                <CardDescription className="text-gray-500 dark:text-primary">{mentor.expertise}</CardDescription>
                             </CardHeader>
                             <CardContent>
-                                <p className="text-gray-700">{mentor.bio}</p>
+                                <p className="text-gray-700 dark:text-primary">{mentor.bio}</p>
                             </CardContent>
                         </Card>
                     </SwiperSlide>

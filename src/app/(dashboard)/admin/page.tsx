@@ -22,10 +22,10 @@ export default async function AdminPage() {
             {/* Admin Hero Section */}
             <section className="w-full pt-4 pb-2 text-center">
                 <div className="max-w-7xl mx-auto">
-                    <h1 className="text-3xl sm:text-5xl font-bold text-indigo-800 mb-4">
+                    <h1 className="text-3xl sm:text-5xl font-bold text-indigo-800 mb-4 dark:text-indigo-500">
                         Dashboard
                     </h1>
-                    <p className="text-md sm:text-lg text-gray-700 mb-6 sm:mb-8">
+                    <p className="text-md sm:text-lg text-gray-700 dark:text-primary mb-6 sm:mb-8">
                         Manage users, courses, and mentoring program settings for <b>Admin</b>.
                     </p>
                 </div>
@@ -44,7 +44,7 @@ export default async function AdminPage() {
             </section>
 
             {/* Admin Actions Section */}
-            <section className="mt-8 sm:mt-12 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 w-full max-w-4xl px-4 sm:px-0 text-center">
+            <section className="mt-8 sm:mt-12 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 xs:w-full px-4 sm:px-0 text-center">
                 <AnimatedButton href="/admin" className="px-6 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 w-full sm:w-auto">
                     Manage Users
                 </AnimatedButton>

@@ -43,7 +43,7 @@ const AboutUsDropdown = () => {
             </button>
             {isDropdownOpen && (
                 <motion.div
-                    className="absolute top-full left-0 mt-1 w-48 bg-white rounded-lg shadow-lg z-10 p-2"
+                    className="absolute top-full left-0 mt-1 w-48 bg-white dark:bg-background rounded-lg shadow-lg dark:border-2 dark:border-indigo-600 dark:shadow-zinc-600 z-10 p-2"
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}

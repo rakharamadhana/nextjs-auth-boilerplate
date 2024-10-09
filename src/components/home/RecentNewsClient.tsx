@@ -8,18 +8,50 @@ import { Autoplay } from 'swiper/modules'; // Import Autoplay module
 import { motion, useScroll, useTransform } from 'framer-motion';
 
 import 'swiper/css/bundle';
+import Link from "next/link";
 
 // Simulated function to fetch news data
 async function getRecentNews() {
     await new Promise(resolve => setTimeout(resolve, 500)); // Simulate API delay
     return [
-        { id: 1, title: "New Breakthrough in Quantum Computing", description: "Scientists achieve major milestone in quantum supremacy.", date: "2023-10-05", imageUrl: "https://placehold.co/400x200.png" },
-        { id: 2, title: "Global Climate Summit Announces New Targets", description: "World leaders agree on ambitious goals to combat climate change.", date: "2023-10-04", imageUrl: "https://placehold.co/400x200.png" },
-        { id: 3, title: "Tech Giant Unveils Revolutionary AI Assistant", description: "New AI technology promises to transform daily life and work.", date: "2023-10-03", imageUrl: "https://placehold.co/400x200.png" },
-        { id: 4, title: "Advancements in Renewable Energy Technologies", description: "New technologies are making renewable energy more efficient and affordable.", date: "2023-10-02", imageUrl: "https://placehold.co/400x200.png" },
-        { id: 5, title: "Breakthroughs in Cancer Research", description: "Researchers discover new methods to treat various types of cancer.", date: "2023-10-01", imageUrl: "https://placehold.co/400x200.png" }
+        {
+            id: 1,
+            title: "New Breakthrough in Quantum Computing",
+            description: "Scientists achieve major milestone in quantum supremacy.",
+            date: "2023-10-05",
+            imageUrl: "https://placehold.co/400x200.png",
+        },
+        {
+            id: 2,
+            title: "Global Climate Summit Announces New Targets",
+            description: "World leaders agree on ambitious goals to combat climate change.",
+            date: "2023-10-04",
+            imageUrl: "https://placehold.co/400x200.png",
+        },
+        {
+            id: 3,
+            title: "Tech Giant Unveils Revolutionary AI Assistant",
+            description: "New AI technology promises to transform daily life and work.",
+            date: "2023-10-03",
+            imageUrl: "https://placehold.co/400x200.png",
+        },
+        {
+            id: 4,
+            title: "Advancements in Renewable Energy Technologies",
+            description: "New technologies are making renewable energy more efficient and affordable.",
+            date: "2023-10-02",
+            imageUrl: "https://placehold.co/400x200.png",
+        },
+        {
+            id: 5,
+            title: "Breakthroughs in Cancer Research",
+            description: "Researchers discover new methods to treat various types of cancer.",
+            date: "2023-10-01",
+            imageUrl: "https://placehold.co/400x200.png",
+        }
     ];
 }
+
 
 type NewsItem = {
     id: number;
@@ -46,16 +78,19 @@ export default function RecentNewsClient() {
 
     const { scrollYProgress } = useScroll({
         target: ref,
-
     });
 
     const scale = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.6]); // Scale up at the top and down at the bottom
 
+    const generateSlug = (title: string) => {
+        return title.toLowerCase().replace(/\s+/g, '-').replace(/[^\w-]+/g, '');
+    };
+
     if (loading) {
         return (
-            <div className="flex space-x-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 {Array.from({ length: 4 }).map((_, index) => (
-                    <Card key={index} className="overflow-hidden animate-pulse w-72">
+                    <Card key={index} className="overflow-hidden animate-pulse hover:bg-gray-100 transition-colors dark:hover:bg-indigo-800 dark:border-indigo-400 dark:shadow-zinc-400">
                         <div className="h-48 bg-gray-300"></div>
                         <CardHeader>
                             <CardTitle className="h-6 bg-gray-300 rounded w-3/4 mb-2"></CardTitle>
@@ -71,13 +106,7 @@ export default function RecentNewsClient() {
     }
 
     return (
-        <motion.div
-            ref={ref}
-            style={{
-                scale: scale,
-            }}
-            transition={{ duration: 0.3 }} // Optional: for smoother transitions
-        >
+        <motion.div ref={ref} style={{ scale: scale }} transition={{ duration: 0.3 }}>
             <Swiper
                 modules={[Autoplay]}
                 autoplay={{
@@ -85,7 +114,7 @@ export default function RecentNewsClient() {
                     pauseOnMouseEnter: true,
                     disableOnInteraction: false,
                 }}
-                spaceBetween={30}
+                spaceBetween={10}
                 loop={true}
                 speed={2000}
                 breakpoints={{
@@ -96,23 +125,25 @@ export default function RecentNewsClient() {
                 }}
             >
                 {newsItems.map((item) => (
-                    <SwiperSlide key={item.id} className="pb-6">
-                        <Card className="overflow-hidden hover:bg-gray-100 transition-colors duration-100">
-                            <Image
-                                src={item.imageUrl}
-                                alt={item.title}
-                                width={400}
-                                height={200}
-                                className="w-full h-48 object-cover"
-                            />
-                            <CardHeader>
-                                <CardTitle>{item.title}</CardTitle>
-                                <CardDescription>{new Date(item.date).toLocaleDateString()}</CardDescription>
-                            </CardHeader>
-                            <CardContent>
-                                <p>{item.description}</p>
-                            </CardContent>
-                        </Card>
+                    <SwiperSlide key={item.id} className="pb-6 px-2">
+                        <Link href={`/news/${generateSlug(item.title)}`}>
+                            <Card className="overflow-hidden hover:bg-gray-100 transition-colors duration-300 dark:hover:bg-indigo-800 dark:border-indigo-400 dark:shadow-zinc-400">
+                                <Image
+                                    src={item.imageUrl}
+                                    alt={item.title}
+                                    width={400}
+                                    height={200}
+                                    className="w-full h-48 object-cover"
+                                />
+                                <CardHeader>
+                                    <CardTitle>{item.title}</CardTitle>
+                                    <CardDescription>{new Date(item.date).toLocaleDateString()}</CardDescription>
+                                </CardHeader>
+                                <CardContent>
+                                    <p>{item.description}</p>
+                                </CardContent>
+                            </Card>
+                        </Link>
                     </SwiperSlide>
                 ))}
             </Swiper>

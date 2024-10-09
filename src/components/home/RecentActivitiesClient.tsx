@@ -49,7 +49,7 @@ export default function RecentActivitiesClient() {
         return (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {Array.from({ length: 3 }).map((_, index) => (
-                    <Card key={index} className="overflow-hidden animate-pulse">
+                    <Card key={index} className="overflow-hidden animate-pulse hover:bg-gray-100 transition-colors dark:hover:bg-indigo-800 dark:border-indigo-400 dark:shadow-zinc-400">
                         <div className="h-48 bg-gray-300"></div>
                         <CardHeader>
                             <CardTitle className="h-6 bg-gray-300 rounded w-3/4 mb-2"></CardTitle>
@@ -90,7 +90,7 @@ export default function RecentActivitiesClient() {
             >
                 {activityItems.map((item) => (
                     <SwiperSlide key={item.id} className='pb-6'>
-                        <Card className="overflow-hidden hover:bg-gray-100 transition-colors duration-100">
+                        <Card className="overflow-hidden hover:bg-gray-100 transition-colors duration-300 dark:hover:bg-indigo-800 dark:border-indigo-400 dark:shadow-zinc-400">
                             <Image
                                 src={item.imageUrl}
                                 alt={item.title}

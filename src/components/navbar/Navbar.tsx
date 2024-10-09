@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSun, faMoon } from '@fortawesome/free-solid-svg-icons';
-import AboutUsDropdown from "./AboutUsDropdown"; // Import the new component
+import AboutUsDropdown from "./AboutUsDropdown";
 
 const Navbar = ({ session }: { session: any }) => {
     const pathname = usePathname();
@@ -21,6 +21,7 @@ const Navbar = ({ session }: { session: any }) => {
     const navTop = useTransform(scrollY, [0, 100], ["0rem", "1rem"]);
     const isHomePath = pathname === "/";
     const [darkMode, setDarkMode] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const htmlElement = document.documentElement;
@@ -31,9 +32,39 @@ const Navbar = ({ session }: { session: any }) => {
         }
     }, [darkMode]);
 
+    // UseEffect to handle loading state
+    useEffect(() => {
+        // Simulate loading finished event or trigger when page is fully loaded
+        setLoading(false);
+    }, []); // Empty dependency array ensures it runs after the initial render
+
     const toggleDarkMode = () => {
         setDarkMode((prevMode) => !prevMode);
     };
+
+    if (loading) {
+        return (
+            <header
+                className="z-10 w-full p-3 mx-auto bg-opacity-60 bg-gradient-to-b from-zinc-100 via-zinc-50 to-transparent"
+            >
+                <div className="container mx-auto flex items-center justify-between">
+                    <div className="flex items-center space-x-6">
+                        <div className='w-10 h-10 rounded-full bg-gray-300 animate-pulse'></div>
+                        <div className="hidden md:flex space-x-3">
+                            <div className='w-16 bg-gray-300 rounded-lg h-4'></div>
+                            <div className='w-16 bg-gray-300 rounded-lg h-4'></div>
+                            <div className='w-16 bg-gray-300 rounded-lg h-4'></div>
+                        </div>
+                    </div>
+
+                    <div className="flex items-center space-x-4">
+                        <div className='w-20 bg-gray-300 rounded-lg h-10'></div>
+                        <div className='w-10 bg-gray-300 rounded-lg h-10'></div>
+                    </div>
+                </div>
+            </header>
+        );
+    }
 
     return (
         <motion.header
@@ -70,26 +101,26 @@ const Navbar = ({ session }: { session: any }) => {
                         </Link>
 
                         {/* Replace About Us Dropdown with the new component */}
-                        <AboutUsDropdown />
+                        <AboutUsDropdown/>
                     </div>
                 </div>
 
-                <MobileMenuToggle />
+                <MobileMenuToggle/>
 
                 <div className="flex items-center space-x-4">
                     {session ? (
-                        <UserAccountNav />
+                        <UserAccountNav/>
                     ) : (
-                        <Link className={buttonVariants({ variant: "outline" })} href="/sign-in">
+                        <Link className={buttonVariants({variant: "outline"})} href="/sign-in">
                             Sign in
                         </Link>
                     )}
 
                     <Button variant='ghost' size='icon' onClick={toggleDarkMode}>
                         {darkMode ? (
-                            <FontAwesomeIcon icon={faMoon} className="h-5 w-5" />
+                            <FontAwesomeIcon icon={faMoon} className="h-5 w-5"/>
                         ) : (
-                            <FontAwesomeIcon icon={faSun} className="h-5 w-5" />
+                            <FontAwesomeIcon icon={faSun} className="h-5 w-5"/>
                         )}
                     </Button>
                 </div>

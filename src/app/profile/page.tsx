@@ -11,7 +11,7 @@ const ProfilePage = async () => {
     return (
         <div className="flex flex-col items-center justify-center p-4 sm:p-6">
             {/* Heading */}
-            <section className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-indigo-800 mb-4 sm:mb-6 text-center">
+            <section className="text-2xl sm:text-3xl md:text-4xl font-extrabold text-indigo-800 mb-4 sm:mb-6 text-center dark:text-indigo-500">
                 My Profile
             </section>
 
@@ -26,15 +26,15 @@ const ProfilePage = async () => {
                         height={100}
                         sizes="(max-width: 768px) 100px, 120px"
                     />
-                    <p className="text-lg sm:text-xl font-semibold text-gray-700 mb-2 text-center">
-                        Hello, <span className="text-indigo-600">{session?.user.name}</span>
+                    <p className="text-lg sm:text-xl font-semibold text-gray-700 mb-2 text-center dark:text-primary">
+                        Hello, <span className="text-indigo-600 dark:text-indigo-300">{session?.user.name}</span>
                     </p>
                 </section>
             ) : null}
 
             {/* Profile Information */}
             <section className="border bg-white shadow-lg rounded-lg xl:w-[30rem] lg:w-96 p-4 sm:p-6 mt-4 sm:mt-6 w-full max-w-lg mx-auto">
-                <h2 className="text-lg sm:text-xl font-bold text-indigo-700 mb-4 text-center">
+                <h2 className="text-lg sm:text-xl font-bold text-indigo-700  mb-4 text-center">
                     Account Information
                 </h2>
                 <EditProfileForm />

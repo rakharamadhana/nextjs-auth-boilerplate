@@ -129,7 +129,7 @@ const EditProfileForm = () => {
                                 <FormLabel className="text-gray-800">Name</FormLabel>
                                 <FormControl>
                                     <Input
-                                        className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
+                                        className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500 dark:bg-primary dark:text-accent"
                                         placeholder='Enter your name'
                                         {...field}
                                     />
@@ -147,7 +147,7 @@ const EditProfileForm = () => {
                                 <FormControl>
                                     <Input
                                         type='email'
-                                        className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500"
+                                        className="border border-gray-300 focus:border-indigo-500 focus:ring focus:ring-indigo-500 dark:bg-primary dark:text-accent"
                                         placeholder='mail@example.com'
                                         {...field}
                                     />
