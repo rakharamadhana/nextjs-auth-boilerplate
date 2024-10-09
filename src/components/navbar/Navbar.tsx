@@ -80,7 +80,7 @@ const Navbar = ({ session }: { session: any }) => {
                     {session ? (
                         <UserAccountNav />
                     ) : (
-                        <Link className={buttonVariants()} href="/sign-in">
+                        <Link className={buttonVariants({ variant: "outline" })} href="/sign-in">
                             Sign in
                         </Link>
                     )}
